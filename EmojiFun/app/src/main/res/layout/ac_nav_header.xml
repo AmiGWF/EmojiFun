@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/em_header_top_bg"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#089">
+    android:background="@drawable/w1">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_launcher"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/em_heander_icon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/w1"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/em_header_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/em_margin_10"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="EmojiFun"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/em_font_size_14" />
+
+        <TextView
+            android:id="@+id/em_header_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/em_margin_8"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="During the late 1990s,food secutrity and the bio-economy "
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/em_font_size_12" />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

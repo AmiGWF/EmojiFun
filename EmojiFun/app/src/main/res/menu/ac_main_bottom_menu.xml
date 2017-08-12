@@ -3,20 +3,20 @@
 
     <item
         android:id="@+id/menu_bottom_1"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Item_1"/>
+        android:icon="@drawable/em_ic_compose"
+        android:title="@string/bottom_text_1"/>
     <item
         android:id="@+id/menu_bottom_2"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Item_2"/>
+        android:icon="@drawable/em_ic_handwriting"
+        android:title="@string/bottom_text_2"/>
     <item
         android:id="@+id/menu_bottom_3"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Item_3"/>
+        android:icon="@drawable/em_ic_camera"
+        android:title="@string/bottom_text_3"/>
 
     <item
         android:id="@+id/menu_bottom_4"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Item_4"/>
+        android:icon="@drawable/em_ic_text"
+        android:title="@string/bottom_text_4"/>
 
 </menu>

@@ -1,18 +1,23 @@
 package com.wd.emoji.ui;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wd.eml.utils.EMNavUtil;
 import com.wd.eml.utils.EMUtil;
@@ -26,6 +31,8 @@ import com.wd.emoji.fragment.FragmentTwo;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * author : wudu
  * time : 2017/8/10
@@ -38,6 +45,10 @@ public class EmojiMainActivity extends BaseActivity {
     private ViewPager ac_main_viewpager;
     private BottomNavigationView ac_main_bottom_menu;
     private NavigationView ac_main_nav_layout;
+    //HEADER BACKGROUND
+    private CoordinatorLayout em_header_top_bg;
+    private CircleImageView em_header_icon;
+    private TextView em_header_name,em_header_tips;
 
     private List<Fragment> fragmentList;
 
@@ -59,6 +70,7 @@ public class EmojiMainActivity extends BaseActivity {
         initToolBar();
         initViewPager();
         initBottomNavView();
+        initLeftNavView();
     }
 
     private void initView() {
@@ -67,18 +79,11 @@ public class EmojiMainActivity extends BaseActivity {
         ac_main_viewpager = findView(R.id.ac_main_viewpager);
         ac_main_bottom_menu = findView(R.id.ac_main_bottom_menu);
         ac_main_nav_layout = findView(R.id.ac_main_nav_layout);
-
-       //EMUtil.setColorForDrawerLayout(this,ac_main_drawlayout,Color.RED,0);
-        ac_main_layout.addView(EMUtil.createStatusBarView(this,Color.RED),0);
-        ac_main_drawlayout.setFitsSystemWindows(false);
-        ac_main_layout.setFitsSystemWindows(false);
-        ac_main_layout.setClipToPadding(true);
-        ac_main_nav_layout.setFitsSystemWindows(false);
-        toolbar.setFitsSystemWindows(false);
-
-        //REMOVE BOTTOM NAVIGATION ANMITION
-        EMNavUtil.disShiftingMode(ac_main_bottom_menu);
-
+        //HEADER
+        em_header_top_bg = (CoordinatorLayout) ac_main_nav_layout.findViewById(R.id.em_header_top_bg);
+        em_header_icon = (CircleImageView) ac_main_nav_layout.findViewById(R.id.em_heander_icon);
+        em_header_name = (TextView) ac_main_nav_layout.findViewById(R.id.em_header_name);
+        em_header_tips = (TextView) ac_main_nav_layout.findViewById(R.id.em_header_tips);
     }
 
     private void initFragment() {
@@ -91,9 +96,15 @@ public class EmojiMainActivity extends BaseActivity {
 
     private void initToolBar() {
         toolbar.setTitle("Emoji");
-        toolbar.setTitleTextColor(Color.BLACK);
-        toolbar.setBackgroundColor(Color.RED);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.em_bottom_menu_pressed));
         setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
     }
 
     private void initViewPager() {
@@ -119,18 +130,6 @@ public class EmojiMainActivity extends BaseActivity {
 
 
     private void initBottomNavView() {
-        BottomNavigationItemView nav1,nav2,nav3,nav4;
-         nav1 = (BottomNavigationItemView) ac_main_bottom_menu.findViewById(R.id.menu_bottom_1);
-         nav2 = (BottomNavigationItemView) ac_main_bottom_menu.findViewById(R.id.menu_bottom_2);
-         nav3 = (BottomNavigationItemView) ac_main_bottom_menu.findViewById(R.id.menu_bottom_3);
-         nav4 = (BottomNavigationItemView) ac_main_bottom_menu.findViewById(R.id.menu_bottom_4);
-
-        nav1.setTitle("主题");
-        nav2.setTitle("幻想");
-        nav3.setTitle("E墙");
-        nav4.setTitle("F帖");
-
-
         ac_main_bottom_menu.setOnNavigationItemSelectedListener(new BottomNavigationView
                 .OnNavigationItemSelectedListener() {
 
@@ -153,8 +152,40 @@ public class EmojiMainActivity extends BaseActivity {
                 return true;
             }
         });
+
+        //SET BOTTOM MENU ITEM COLOR
+        EMNavUtil.setBottomNavMenuColor(this,ac_main_bottom_menu,R.color.em_bottom_menu_normal,R.color.em_bottom_menu_pressed);
+
+        //REMOVE BOTTOM NAVIGATION ANMITION
+        EMNavUtil.disShiftingMode(ac_main_bottom_menu);
+
     }
 
+    private void initLeftNavView(){
+        ac_main_nav_layout.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_nav_1:
+                        break;
+                    case R.id.menu_nav_2:
+                        break;
+                    case R.id.menu_nav_3:
+                        break;
+                    case R.id.menu_nav_4:
+                        break;
+                    case R.id.menu_nav_5:
+                        break;
+                    case R.id.menu_nav_6:
+                        break;
+                }
+                return true;
+            }
+        });
+
+        //SET LEFT MENU ITEM COLOR
+        EMNavUtil.setNavMenuColor(this,ac_main_nav_layout,R.color.em_bottom_menu_normal,R.color.em_bottom_menu_pressed);
+    }
 
     @Override
     public void onClick(View view) {

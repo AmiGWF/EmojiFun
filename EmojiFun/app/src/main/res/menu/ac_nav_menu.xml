@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_nav_group_1"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/menu_nav_1"
-            android:icon="@mipmap/ic_launcher"
-            android:title="nav_1"/>
+            android:icon="@drawable/em_left_person"
+            android:title="@string/left_nav_text_1" />
 
         <item
             android:id="@+id/menu_nav_2"
-            android:icon="@mipmap/ic_launcher"
-            android:title="nav_2"/>
+            android:icon="@drawable/em_left_list"
+            android:title="@string/left_nav_text_2" />
 
         <item
             android:id="@+id/menu_nav_3"
-            android:icon="@mipmap/ic_launcher"
-            android:title="nav_3"/>
+            android:icon="@drawable/em_left_mess"
+            android:title="@string/left_nav_text_3" />
 
         <item
             android:id="@+id/menu_nav_4"
-            android:icon="@mipmap/ic_launcher"
-            android:title="nav_4"/>
+            android:icon="@drawable/em_left_dre"
+            android:title="@string/left_nav_text_4" />
+
+
+        <item
+            android:id="@+id/menu_nav_group_2"
+            android:checkableBehavior="single"
+            android:title="@string/left_nav_text_other">
+            <menu>
+                <item
+                    android:id="@+id/menu_nav_5"
+                    android:checkable="true"
+                    android:icon="@drawable/em_left_down"
+                    android:title="@string/left_nav_text_5" />
+
+                <item
+                    android:id="@+id/menu_nav_6"
+                    android:checkable="true"
+                    android:icon="@drawable/em_left_money"
+                    android:title="@string/left_nav_text_6" />
+            </menu>
+        </item>
     </group>
-
-    <item android:title="nav_other">
-        <menu>
-            <item
-                android:id="@+id/menu_nav_5"
-                android:icon="@mipmap/ic_launcher"
-                android:title="nav_5"/>
-
-            <item
-                android:id="@+id/menu_nav_6"
-                android:icon="@mipmap/ic_launcher"
-                android:title="nav_6"/>
-
-        </menu>
-    </item>
-
 </menu>
