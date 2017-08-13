@@ -12,8 +12,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.wd.eml.utils.EMNavUtil;
 import com.wd.eml.utils.EMUtil;
+import com.wd.eml.utils.PaletteUtil;
 import com.wd.emoji.R;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;
@@ -167,6 +170,7 @@ public class EmojiMainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_nav_1:
+                        Log.d(TAG,"ac_main_nav_layout : "+EmojiMainActivity.class.getSimpleName());
                         break;
                     case R.id.menu_nav_2:
                         break;
@@ -185,10 +189,30 @@ public class EmojiMainActivity extends BaseActivity {
 
         //SET LEFT MENU ITEM COLOR
         EMNavUtil.setNavMenuColor(this,ac_main_nav_layout,R.color.em_bottom_menu_normal,R.color.em_bottom_menu_pressed);
+
+        //SET LEFT MENU BACKGROUND
+        PaletteUtil.getIntance().init(getResources(), R.drawable.w1, new PaletteUtil.PaletteCallBack() {
+            @Override
+            public void onCallBack(Palette palette) {
+
+            }
+
+            @Override
+            public void onCallBack(int rgb, int titleColor) {
+                ac_main_nav_layout.setBackgroundColor(rgb);
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         Log.i(TAG, "---------");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }
