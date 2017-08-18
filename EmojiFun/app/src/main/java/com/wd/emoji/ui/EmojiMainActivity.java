@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -72,6 +73,7 @@ public class EmojiMainActivity extends BaseActivity {
         initViewPager();
         initBottomNavView();
         initLeftNavView();
+        initBottomSheetDialog();
     }
 
     private void initView() {
@@ -139,6 +141,8 @@ public class EmojiMainActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_bottom_1:
                         ac_main_viewpager.setCurrentItem(0);
+
+                        bottomSheetDialog.show();
                         break;
                     case R.id.menu_bottom_2:
                         ac_main_viewpager.setCurrentItem(1);
@@ -201,6 +205,14 @@ public class EmojiMainActivity extends BaseActivity {
                 ac_main_nav_layout.setBackgroundColor(rgb);
             }
         });
+    }
+
+
+    BottomSheetDialog bottomSheetDialog;
+    private void initBottomSheetDialog(){
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.dialog_bottom_sheet_menu);
+        //bottomSheetDialog.setTitle();
     }
 
     @Override
