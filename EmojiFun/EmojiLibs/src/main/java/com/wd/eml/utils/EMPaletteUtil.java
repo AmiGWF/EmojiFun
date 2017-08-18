@@ -21,12 +21,12 @@ import android.support.v7.graphics.Palette;
  * Palette.Swatch s = p.getLightMutedSwatch();    //获取柔和的亮
  */
 
-public class PaletteUtil implements Palette.PaletteAsyncListener {
+public class EMPaletteUtil implements Palette.PaletteAsyncListener {
     private static class PaletteUtilSingleton {
-        public static PaletteUtil INSTANCE = new PaletteUtil();
+        public static EMPaletteUtil INSTANCE = new EMPaletteUtil();
     }
 
-    public static PaletteUtil getIntance() {
+    public static EMPaletteUtil getIntance() {
         return PaletteUtilSingleton.INSTANCE;
     }
 
@@ -35,32 +35,26 @@ public class PaletteUtil implements Palette.PaletteAsyncListener {
 
     public synchronized void init(Bitmap bitmap, PaletteCallBack paletteCallBack) {
         if (bitmap == null) throw new NullPointerException("bitmap is null");
-        Palette.from(bitmap).generate(PaletteUtil.this);
+        Palette.from(bitmap).generate(EMPaletteUtil.this);
         this.callBack = paletteCallBack;
     }
 
 
     public synchronized void init(Resources resources, int resourcesId, PaletteCallBack paletteCallBack) {
         Bitmap bitmap = BitmapFactory.decodeResource(resources, resourcesId);
-        Palette.from(bitmap).generate(PaletteUtil.this);
+        Palette.from(bitmap).generate(EMPaletteUtil.this);
         this.callBack = paletteCallBack;
     }
 
 
     @Override
     public void onGenerated(Palette palette) {
-        Palette.Swatch swatch = null;
-        if (palette.getVibrantSwatch() != null) {
-            swatch = palette.getVibrantSwatch();
-        } else if (palette.getLightVibrantSwatch() != null) {
-            swatch = palette.getLightVibrantSwatch();
-        }
-        if (swatch == null)
-            throw new NullPointerException("Method PaletteUtil.onGenerated palette.getVibrantSwatch is null");
-
         callBack.onCallBack(palette);
 
-        callBack.onCallBack(swatch.getRgb(), swatch.getTitleTextColor());
+        if (PaletteSwatchCase(palette) != null) {
+            callBack.onCallBack(PaletteSwatchCase(palette).getRgb(), PaletteSwatchCase(palette).getTitleTextColor());
+        }
+
     }
 
 
@@ -74,7 +68,7 @@ public class PaletteUtil implements Palette.PaletteAsyncListener {
      *                  所以下面使用移位的方法可以得到每种颜色的值，然后每种颜色值减小一下，在合成RGB颜色，颜色就会看起来深一些了
      * @return
      */
-    public int setColorDeepened(int RGBValues) {
+    public static int setColorDeepened(int RGBValues) {
         int alpha = RGBValues >> 24;
         int red = RGBValues >> 16 & 0xFF;
         int green = RGBValues >> 8 & 0xFF;
@@ -91,7 +85,7 @@ public class PaletteUtil implements Palette.PaletteAsyncListener {
      * @param RGBValues
      * @return
      */
-    public int setColorLighter(int RGBValues) {
+    public static int setColorLighter(int RGBValues) {
         int red = RGBValues >> 16 & 0xff;
         int green = RGBValues >> 8 & 0xff;
         int blue = RGBValues & 0xff;
@@ -114,6 +108,38 @@ public class PaletteUtil implements Palette.PaletteAsyncListener {
         void onCallBack(Palette palette);
 
         void onCallBack(int rgb, int titleColor);
+    }
+
+    private Palette.Swatch PaletteSwatchCase(Palette palette) {
+        Palette.Swatch swatch = null;
+        if (palette.getVibrantSwatch() != null) {
+            //获取到充满活力的这种色调
+            swatch = palette.getVibrantSwatch();
+            EMLog.i(1);
+        } else if (palette.getLightVibrantSwatch() != null) {
+            //获取充满活力的亮
+            swatch = palette.getLightVibrantSwatch();
+            EMLog.i(2);
+        } else if (palette.getDarkMutedSwatch() != null) {
+            //获取柔和的黑
+            //swatch = palette.getDarkMutedSwatch();
+            EMLog.i(3);
+        } else if (palette.getDarkVibrantSwatch() != null) {
+            //获取充满活力的黑
+            //swatch = palette.getDarkVibrantSwatch();
+            EMLog.i(4);
+        } else if (palette.getMutedSwatch() != null) {
+            //获取柔和的色调
+            swatch = palette.getMutedSwatch();
+            EMLog.i(5);
+        } else if (palette.getLightMutedSwatch() != null) {
+            //获取柔和的亮
+            swatch = palette.getLightMutedSwatch();
+            EMLog.i(6);
+        }
+
+        //if (swatch == null) throw new NullPointerException("Method EMPaletteUtil.onGenerated palette.swatch is null");
+        return swatch;
     }
 
 

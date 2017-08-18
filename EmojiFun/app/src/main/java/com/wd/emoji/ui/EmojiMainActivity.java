@@ -1,10 +1,8 @@
 package com.wd.emoji.ui;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -21,9 +19,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wd.eml.utils.EMLog;
 import com.wd.eml.utils.EMNavUtil;
-import com.wd.eml.utils.EMUtil;
-import com.wd.eml.utils.PaletteUtil;
+import com.wd.eml.utils.EMPaletteUtil;
 import com.wd.emoji.R;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;
@@ -51,7 +49,7 @@ public class EmojiMainActivity extends BaseActivity {
     //HEADER BACKGROUND
     private CoordinatorLayout em_header_top_bg;
     private CircleImageView em_header_icon;
-    private TextView em_header_name,em_header_tips;
+    private TextView em_header_name, em_header_tips;
 
     private List<Fragment> fragmentList;
 
@@ -100,7 +98,7 @@ public class EmojiMainActivity extends BaseActivity {
     private void initToolBar() {
         toolbar.setTitle("Emoji");
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.em_bottom_menu_pressed));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.em_bottom_menu_pressed));
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -157,20 +155,21 @@ public class EmojiMainActivity extends BaseActivity {
         });
 
         //SET BOTTOM MENU ITEM COLOR
-        EMNavUtil.setBottomNavMenuColor(this,ac_main_bottom_menu,R.color.em_bottom_menu_normal,R.color.em_bottom_menu_pressed);
+        EMNavUtil.setBottomNavMenuColor(this, ac_main_bottom_menu, R.color.em_bottom_menu_normal, R.color
+                .em_bottom_menu_pressed);
 
         //REMOVE BOTTOM NAVIGATION ANMITION
         EMNavUtil.disShiftingMode(ac_main_bottom_menu);
 
     }
 
-    private void initLeftNavView(){
+    private void initLeftNavView() {
         ac_main_nav_layout.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_nav_1:
-                        Log.d(TAG,"ac_main_nav_layout : "+EmojiMainActivity.class.getSimpleName());
+                        Log.d(TAG, "ac_main_nav_layout : " + EmojiMainActivity.class.getSimpleName());
                         break;
                     case R.id.menu_nav_2:
                         break;
@@ -188,26 +187,25 @@ public class EmojiMainActivity extends BaseActivity {
         });
 
         //SET LEFT MENU ITEM COLOR
-        EMNavUtil.setNavMenuColor(this,ac_main_nav_layout,R.color.em_bottom_menu_normal,R.color.em_bottom_menu_pressed);
+        EMNavUtil.setNavMenuColor(this, ac_main_nav_layout, R.color.em_bottom_menu_normal, R.color
+                .em_bottom_menu_pressed);
 
         //SET LEFT MENU BACKGROUND
-        PaletteUtil.getIntance().init(getResources(), R.drawable.w1, new PaletteUtil.PaletteCallBack() {
+        EMPaletteUtil.getIntance().init(getResources(), R.drawable.bg3, new EMPaletteUtil.PaletteCallBack() {
             @Override
             public void onCallBack(Palette palette) {
-
             }
 
             @Override
             public void onCallBack(int rgb, int titleColor) {
                 ac_main_nav_layout.setBackgroundColor(rgb);
-
             }
         });
     }
 
     @Override
     public void onClick(View view) {
-        Log.i(TAG, "---------");
+        EMLog.i("--------");
     }
 
     @Override
