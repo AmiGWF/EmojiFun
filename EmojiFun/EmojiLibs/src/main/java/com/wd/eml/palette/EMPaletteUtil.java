@@ -1,10 +1,12 @@
-package com.wd.eml.utils;
+package com.wd.eml.palette;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.graphics.Palette;
+
+import com.wd.eml.utils.EMLog;
 
 /**
  * Author : wudu

@@ -21,8 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wd.eml.utils.EMLog;
-import com.wd.eml.utils.EMNavUtil;
-import com.wd.eml.utils.EMPaletteUtil;
+import com.wd.eml.bottomnavigationview.EMNavUtil;
+import com.wd.eml.palette.EMPaletteUtil;
 import com.wd.emoji.R;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;

@@ -2,8 +2,7 @@ package com.wd.eml.bottomsheetdialog.interfaces;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.MenuItem;
 
 /**
@@ -15,10 +14,9 @@ import android.view.MenuItem;
 public class BottomSheetMenuItem implements BottomSheetItem {
     @ColorInt
     private int mTextColor;
-    //着色
+    //图片着色
     @ColorInt
     private int mTintColor;
-    @DrawableRes
     private int mItemBackground;
 
     private int mItemId;
@@ -26,20 +24,53 @@ public class BottomSheetMenuItem implements BottomSheetItem {
     private Drawable mItemIcon;
     private MenuItem mMenuItem;
 
-    public BottomSheetMenuItem(MenuItem mMenuItem, @ColorRes int mTextColor,  int mItemBackground, @ColorRes int mTintColor) {
-        this.mItemId = mItemId;
-        this.mItemText = mItemText;
-        this.mItemIcon = mItemIcon;
-        this.mMenuItem = mMenuItem;
-        this.mBackground = mBackground;
+    public BottomSheetMenuItem(MenuItem menuItem, @ColorInt int textColor, int mItemBackground, @ColorInt int tintColor) {
+        this.mMenuItem = menuItem;
+        this.mTextColor = textColor;
+        this.mItemBackground = mItemBackground;
+        this.mTintColor = tintColor;
+
+        mItemText = menuItem.getTitle().toString();
+        mItemId = menuItem.getItemId();
+        mItemIcon = menuItem.getIcon();
+
+        if (tintColor != -1) {
+            mItemIcon = DrawableCompat.wrap(mItemIcon);
+            DrawableCompat.setTint(mItemIcon, mTintColor);
+        }
     }
 
-    @DrawableRes
-    private int mBackground;
 
+    public int getmTextColor() {
+        return mTextColor;
+    }
+
+    public int getmTintColor() {
+        return mTintColor;
+    }
+
+    public int getmItemBackground() {
+        return mItemBackground;
+    }
+
+    public int getmItemId() {
+        return mItemId;
+    }
+
+    public String getmItemText() {
+        return mItemText;
+    }
+
+    public Drawable getmItemIcon() {
+        return mItemIcon;
+    }
+
+    public MenuItem getmMenuItem() {
+        return mMenuItem;
+    }
 
     @Override
     public String getText() {
-        return null;
+        return mItemText;
     }
 }

@@ -28,6 +28,10 @@ public class EMBottomSheetDialog extends BottomSheetDialog {
         super(context);
     }
 
+    public EMBottomSheetDialog(Context context, int theme) {
+        super(context, theme);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

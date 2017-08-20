@@ -9,15 +9,14 @@ import android.support.annotation.DrawableRes;
  */
 
 public class BottomSheetDivider implements BottomSheetItem {
-    @DrawableRes
-    private int mDividerDrawable;
+    private int mDividerBackground;
 
-    public BottomSheetDivider(int mDividerDrawable) {
-        this.mDividerDrawable = mDividerDrawable;
+    public BottomSheetDivider(int mDividerBackground) {
+        this.mDividerBackground = mDividerBackground;
     }
 
-    public int getmDividerDrawable() {
-        return mDividerDrawable;
+    public int getmDividerBackground() {
+        return mDividerBackground;
     }
 
     @Override
