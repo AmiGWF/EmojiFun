@@ -24,11 +24,11 @@ public class BottomSheetHeader implements BottomSheetItem {
 
 
     public BottomSheetHeader(String mText, @ColorInt int mTextColor) {
-        this(mText, mTextColor, -1);
+        this(mText, mTextColor, 0);
     }
 
     public BottomSheetHeader(String mText, @ColorInt int mTextColor, @DrawableRes int mIcon) {
-       this(mText,mTextColor,-1,mIcon);
+       this(mText,mTextColor,0,mIcon);
     }
 
     public BottomSheetHeader(String mText, @ColorInt int mTextColor, @ColorInt int mTextBackground,@DrawableRes int mIcon) {

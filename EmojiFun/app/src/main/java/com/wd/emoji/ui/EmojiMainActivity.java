@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,9 +19,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wd.eml.utils.EMLog;
 import com.wd.eml.bottomnavigationview.EMNavUtil;
+import com.wd.eml.bottomsheetdialog.EMBottomSheetBuilder;
+import com.wd.eml.bottomsheetdialog.EMBottomSheetDialog;
+import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.palette.EMPaletteUtil;
+import com.wd.eml.utils.EMLog;
 import com.wd.emoji.R;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;
@@ -142,7 +144,7 @@ public class EmojiMainActivity extends BaseActivity {
                     case R.id.menu_bottom_1:
                         ac_main_viewpager.setCurrentItem(0);
 
-                        bottomSheetDialog.show();
+                        dialog.show();
                         break;
                     case R.id.menu_bottom_2:
                         ac_main_viewpager.setCurrentItem(1);
@@ -208,11 +210,22 @@ public class EmojiMainActivity extends BaseActivity {
     }
 
 
-    BottomSheetDialog bottomSheetDialog;
+  EMBottomSheetDialog dialog;
     private void initBottomSheetDialog(){
-        bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.dialog_bottom_sheet_menu);
-        //bottomSheetDialog.setTitle();
+       dialog = new EMBottomSheetBuilder(this)
+               .setMode(EMBottomSheetBuilder.MODE_LIST)
+               .addTitleItem("title")
+               .addItem(0,"item11111")
+               .addItem(1,"item  222",getResources().getColor(R.color.primary_text_color))
+               .setExpandOnStart(true)
+               .setBottomSheetItemClickListener(new BottomSheetItemClickListener() {
+                   @Override
+                   public void onBottomSheetItemClick(MenuItem item) {
+                       EMLog.d("menu iten clicl  ooo : "+item.getItemId());
+                   }
+               })
+               .createBottomSheetMenuDialog();
+
     }
 
     @Override

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/adapter_item_icon"
         android:layout_width="@dimen/bottom_sheet_dialog_item_icon_24"
         android:layout_height="@dimen/bottom_sheet_dialog_item_icon_24"
         android:layout_marginLeft="@dimen/bottom_sheet_dialog_item_margin_16"
-        android:visibility="visible"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/adapter_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/bottom_sheet_dialog_header_font_16"
         android:layout_marginLeft="@dimen/bottom_sheet_dialog_item_margin_16"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:textSize="@dimen/bottom_sheet_dialog_header_font_16"/>
 </LinearLayout>

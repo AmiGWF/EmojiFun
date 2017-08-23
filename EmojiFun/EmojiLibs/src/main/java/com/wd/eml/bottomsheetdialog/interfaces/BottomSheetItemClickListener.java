@@ -9,5 +9,5 @@ import android.view.MenuItem;
  */
 
 public interface BottomSheetItemClickListener {
-    void bottomSheetItemClick(MenuItem item);
+    void onBottomSheetItemClick(MenuItem item);
 }

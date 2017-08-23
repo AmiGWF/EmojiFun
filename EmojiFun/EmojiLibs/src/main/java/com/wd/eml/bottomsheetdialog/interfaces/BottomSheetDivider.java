@@ -1,7 +1,5 @@
 package com.wd.eml.bottomsheetdialog.interfaces;
 
-import android.support.annotation.DrawableRes;
-
 /**
  * author : wudu
  * time : 2017/8/18

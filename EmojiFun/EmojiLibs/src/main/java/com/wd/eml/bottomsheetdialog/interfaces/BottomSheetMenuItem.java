@@ -14,7 +14,6 @@ import android.view.MenuItem;
 public class BottomSheetMenuItem implements BottomSheetItem {
     @ColorInt
     private int mTextColor;
-    //图片着色
     @ColorInt
     private int mTintColor;
     private int mItemBackground;
@@ -34,7 +33,7 @@ public class BottomSheetMenuItem implements BottomSheetItem {
         mItemId = menuItem.getItemId();
         mItemIcon = menuItem.getIcon();
 
-        if (tintColor != -1) {
+        if (tintColor != 0) {
             mItemIcon = DrawableCompat.wrap(mItemIcon);
             DrawableCompat.setTint(mItemIcon, mTintColor);
         }
