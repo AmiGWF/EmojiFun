@@ -39,7 +39,7 @@ public class EMBottomSheetAdapterBuilder {
     private List<BottomSheetItem> sheetItemList;
 
     private Menu mMenu;
-    private boolean isFromMenu = false;
+    private boolean isFromMenu;
 
     private int mode;
 
@@ -78,7 +78,7 @@ public class EMBottomSheetAdapterBuilder {
     /**
      * addItem
      **/
-    public void addItem(int id, String title, @DrawableRes int icon, @ColorInt int textColor, @ColorInt int
+    public void addItem(int id, String title,  @ColorInt int textColor,@DrawableRes int icon, @ColorInt int
             itemBackground, @ColorInt int tintColor) {
         if (mMenu == null) {
             mMenu = new MenuBuilder(mContext);
@@ -86,6 +86,8 @@ public class EMBottomSheetAdapterBuilder {
         MenuItem menuItem = mMenu.add(Menu.NONE, id, Menu.NONE, title);
         if (icon != 0) {
             menuItem.setIcon(icon);
+        }else{
+            menuItem.setIcon(null);
         }
         sheetItemList.add(new BottomSheetMenuItem(menuItem, textColor, itemBackground, tintColor));
     }
@@ -103,7 +105,7 @@ public class EMBottomSheetAdapterBuilder {
             bottomSheetItemClickListener) {
         //如果是外界传进来的menu 就直接创建item
         if (isFromMenu) {
-            sheetItemList = createSheetItems(titleTextColor, itemTextColor, titleBackground, itemBackground,
+            sheetItemList = createAdapterItems(titleTextColor, itemTextColor, titleBackground, itemBackground,
                     tintColor, dividerBackground);
         }
         //如果不是即使用默认的xml
@@ -130,6 +132,9 @@ public class EMBottomSheetAdapterBuilder {
                 if (titleBackground != 0) {
                     titleText.setTextColor(titleTextColor);
                 }
+                if(((BottomSheetHeader) titleSheetItem).getmIcon() != 0){
+                    titleIcon.setImageResource(((BottomSheetHeader) titleSheetItem).getmIcon());
+                }
                 //WHY--BECAUSE HEADER TITLE SHOW
                 sheetItemList.remove(0);
             }
@@ -149,8 +154,7 @@ public class EMBottomSheetAdapterBuilder {
             recyclerView.post(new Runnable() {
                 @Override
                 public void run() {
-                    float gridMargin = mContext.getResources().getDimensionPixelSize(R.dimen
-                            .bottomsheet_grid_horizontal_margin_24);
+                    float gridMargin = mContext.getResources().getDimensionPixelSize(R.dimen.grid_horizontal_margin_24);
                     itemAdapter.setmGridItemWidth((int) ((recyclerView.getWidth() - (columns - 1) * gridMargin) /
                             columns));
                     recyclerView.setAdapter(itemAdapter);
@@ -168,7 +172,7 @@ public class EMBottomSheetAdapterBuilder {
     /**
      * CREATE BOTTOMSHEETDIALOG SINGLE ITEM
      */
-    public List<BottomSheetItem> createSheetItems(int titleTextColor, int itemTextColor, int titleBackground, int
+    public List<BottomSheetItem> createAdapterItems(int titleTextColor, int itemTextColor, int titleBackground, int
             itemBackground, int tintColor, int dividerBackground) {
         List<BottomSheetItem> bottomSheetItems = new ArrayList<>();
         mTitles = 0;

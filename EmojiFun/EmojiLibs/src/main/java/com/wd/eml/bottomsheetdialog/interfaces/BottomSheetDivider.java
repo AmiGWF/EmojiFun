@@ -13,7 +13,7 @@ public class BottomSheetDivider implements BottomSheetItem {
         this.mDividerBackground = mDividerBackground;
     }
 
-    public int getmDividerBackground() {
+    public int getDividerBackground() {
         return mDividerBackground;
     }
 

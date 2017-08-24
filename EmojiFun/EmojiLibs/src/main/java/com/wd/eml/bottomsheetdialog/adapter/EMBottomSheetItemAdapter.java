@@ -56,17 +56,17 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
                         .bottomsheetdialog_list_adapter, parent, false));
             } else if (viewType == TYPE_HEADER) {
                 return new HeaderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout
-                        .bottomsheetdialog_list_adapter, parent, false));
+                        .bottomsheetdialog_def_header, parent, false));
             } else if (viewType == TYPE_DIVIDER) {
                 return new DividerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout
-                        .bottomsheetdialog_list_adapter, parent, false));
+                        .bottomsheetdialog_list_divider, parent, false));
             } else {
                 throw new IllegalArgumentException("EMBottomSheetItemAdapter,the viewType is not allow");
             }
         }
 
         if (mode == EMBottomSheetBuilder.MODE_GRID) {
-            View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottomsheetdialog_list_adapter,
+            View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottomsheetdialog_grid_adapter,
                     parent, false);
             ViewGroup.LayoutParams params = layout.getLayoutParams();
             if (mGridItemWidth != 0) {
@@ -93,7 +93,7 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
             } else {
                 throw new IllegalArgumentException("holder.getItemViewType type is not allow");
             }
-        } else if (mode == EMBottomSheetBuilder.MODE_GRID) {
+        } else{
             ((ItemViewHolder) holder).setData((BottomSheetMenuItem) bottomSheetItem);
         }
     }
@@ -117,9 +117,9 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
         return super.getItemViewType(position);
     }
 
-    /***********************
+    /**
      * VIEWHOLDER
-     *************************/
+     **/
     class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {
             super(itemView);
@@ -138,18 +138,20 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
         }
 
         public void setData(BottomSheetMenuItem menuItem) {
-            if (menuItem.getmItemIcon() != null) {
-                imageView.setImageDrawable(menuItem.getmItemIcon());
+            if (menuItem.getItemIcon() != null) {
+                imageView.setImageDrawable(menuItem.getItemIcon());
                 imageView.setVisibility(View.VISIBLE);
+            }else{
+                imageView.setVisibility(View.GONE);
             }
 
             textView.setText(menuItem.getText());
-            if (menuItem.getmTextColor() != 0) {
-                textView.setTextColor(menuItem.getmTextColor());
+            if (menuItem.getTextColor() != 0) {
+                textView.setTextColor(menuItem.getTextColor());
             }
 
-            if (menuItem.getmItemBackground() != 0) {
-                itemView.setBackgroundColor(menuItem.getmItemBackground());
+            if (menuItem.getItemBackground() != 0) {
+                itemView.setBackgroundColor(menuItem.getItemBackground());
             }
         }
 
@@ -169,8 +171,8 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.adapter_item_icon);
-            textView = (TextView) itemView.findViewById(R.id.adapter_item_text);
+            imageView = (ImageView) itemView.findViewById(R.id.sheet_header_icon);
+            textView = (TextView) itemView.findViewById(R.id.sheet_header_text);
         }
 
         public void setData(BottomSheetHeader header) {
@@ -195,13 +197,12 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
 
         public DividerViewHolder(View itemView) {
             super(itemView);
-            //view = itemView.findViewById(R.id.adapter_item_divider);
-            view = itemView;
+            view = itemView.findViewById(R.id.adapter_item_divider);
         }
 
         public void setData(BottomSheetDivider divider) {
-            if (divider.getmDividerBackground() != 0) {
-                view.setBackgroundColor(divider.getmDividerBackground());
+            if (divider.getDividerBackground() != 0) {
+                view.setBackgroundColor(divider.getDividerBackground());
             }
         }
     }

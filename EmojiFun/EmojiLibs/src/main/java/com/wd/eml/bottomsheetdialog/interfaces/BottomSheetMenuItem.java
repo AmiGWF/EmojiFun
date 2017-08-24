@@ -40,27 +40,27 @@ public class BottomSheetMenuItem implements BottomSheetItem {
     }
 
 
-    public int getmTextColor() {
+    public int getTextColor() {
         return mTextColor;
     }
 
-    public int getmTintColor() {
+    public int getTintColor() {
         return mTintColor;
     }
 
-    public int getmItemBackground() {
+    public int getItemBackground() {
         return mItemBackground;
     }
 
-    public int getmItemId() {
+    public int getItemId() {
         return mItemId;
     }
 
-    public String getmItemText() {
+    public String getItemText() {
         return mItemText;
     }
 
-    public Drawable getmItemIcon() {
+    public Drawable getItemIcon() {
         return mItemIcon;
     }
 

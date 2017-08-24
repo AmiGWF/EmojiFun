@@ -32,8 +32,8 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
     private BottomSheetBehavior behavior;
     private BottomSheetBehavior.BottomSheetCallback callback;
     private AppBarLayout appBarLayout;
+    private BottomSheetItemClickListener bottomSheetItemClickListener;
     OnCancelListener cancelListener;
-    BottomSheetItemClickListener bottomSheetItemClickListener;
 
     boolean mClicked;
     boolean mRequestExpand;

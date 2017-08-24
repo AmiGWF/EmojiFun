@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--item && item icon -->
-    <dimen name="bottom_sheet_dialog_item_margin_16">16dp</dimen>
-    <dimen name="bottom_sheet_dialog_item_icon_24">24dp</dimen>
-    <dimen name="bottom_sheet_dialog_item_height_48">48dp</dimen>
+    <dimen name="item_margin_8">8dp</dimen>
+    <dimen name="item_margin_16">16dp</dimen>
+    <dimen name="item_icon_24">24dp</dimen>
+    <dimen name="item_height_48">48dp</dimen>
     <!--item font size-->
-    <dimen name="bottom_sheet_dialog_header_font_16">16dp</dimen>
-    <dimen name="bottom_sheet_dialog_item_font_14">14dp</dimen>
+    <dimen name="item_font_16">16dp</dimen>
+    <dimen name="item_font_14">14dp</dimen>
     <!--normal margin-->
-    <dimen name="bottom_sheet_dialog_margin_4">4dp</dimen>
+    <dimen name="grid_margin_top_4">4dp</dimen>
     <!--grid item margin-->
-    <dimen name="bottomsheet_grid_horizontal_margin_24">24dp</dimen>
+    <dimen name="grid_horizontal_margin_24">24dp</dimen>
     <!--grid item colmuns-->
-    <integer name="bottomsheet_grid_columns">3</integer>
+    <integer name="grid_columns">3</integer>
 
     <bool name="landscape">false</bool>
     <bool name="tablet_landscape">false</bool>

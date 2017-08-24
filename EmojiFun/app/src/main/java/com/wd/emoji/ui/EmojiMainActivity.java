@@ -1,5 +1,6 @@
 package com.wd.emoji.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,12 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wd.eml.bottomnavigationview.EMNavUtil;
-import com.wd.eml.bottomsheetdialog.EMBottomSheetBuilder;
 import com.wd.eml.bottomsheetdialog.EMBottomSheetDialog;
-import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.palette.EMPaletteUtil;
 import com.wd.eml.utils.EMLog;
 import com.wd.emoji.R;
+import com.wd.emoji.TestActivity;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;
 import com.wd.emoji.fragment.FragmentOne;
@@ -144,7 +144,8 @@ public class EmojiMainActivity extends BaseActivity {
                     case R.id.menu_bottom_1:
                         ac_main_viewpager.setCurrentItem(0);
 
-                        dialog.show();
+                        //dialog.show();
+                        startActivity(new Intent(EmojiMainActivity.this, TestActivity.class));
                         break;
                     case R.id.menu_bottom_2:
                         ac_main_viewpager.setCurrentItem(1);
@@ -212,19 +213,19 @@ public class EmojiMainActivity extends BaseActivity {
 
   EMBottomSheetDialog dialog;
     private void initBottomSheetDialog(){
-       dialog = new EMBottomSheetBuilder(this)
-               .setMode(EMBottomSheetBuilder.MODE_LIST)
-               .addTitleItem("title")
-               .addItem(0,"item11111")
-               .addItem(1,"item  222",getResources().getColor(R.color.primary_text_color))
-               .setExpandOnStart(true)
-               .setBottomSheetItemClickListener(new BottomSheetItemClickListener() {
-                   @Override
-                   public void onBottomSheetItemClick(MenuItem item) {
-                       EMLog.d("menu iten clicl  ooo : "+item.getItemId());
-                   }
-               })
-               .createBottomSheetMenuDialog();
+//       dialog = new EMBottomSheetBuilder(this)
+//               .setMode(EMBottomSheetBuilder.MODE_LIST)
+//               .addTitleItem("title")
+//               .addItem(0,"item11111")
+//               .addItem(1,"item  222",getResources().getColor(R.color.primary_text_color))
+//               .setExpandOnStart(true)
+//               .setBottomSheetItemClickListener(new BottomSheetItemClickListener() {
+//                   @Override
+//                   public void onBottomSheetItemClick(MenuItem item) {
+//                       EMLog.d("menu iten clicl  ooo : "+item.getItemId());
+//                   }
+//               })
+//               .createSheetDialog();
 
     }
 

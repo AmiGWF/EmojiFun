@@ -3,6 +3,7 @@ package com.wd.eml.bottomsheetdialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.MenuRes;
@@ -12,6 +13,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
@@ -27,51 +30,39 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 /**
  * author : wudu
  * time : 2017/8/18
- * <p>
- * 1.布局
- * 有title，文字
- * 有title，图片+文字
- * 有title，图片+文字，list布局形式
- * 有title，图片+文字，grid布局形式
- * <p>
- * 构造方案
- * 直接是context，使用默认的
- * 自带theme
- * 外围布局是CoordinatorLayout
  */
 
 public class EMBottomSheetBuilder {
     //MODE
     public static final int MODE_LIST = 0;
     public static final int MODE_GRID = 1;
-    //RES
+
     @StyleRes
     private int mTheme;
-    //BACKGROUND
-    @DrawableRes
-    private int mBackgroundDrawable;
-    @DrawableRes
-    private int mItemDrawable;
-    //COLOR
-    private int mBackgroundColor;
-    private int mDividerColor;
-    private int mTintColor;
-    private int mTitleTextColor;
-    private int mItemTextColor;
-    private int mItemBackgroundColor;
-    //LAYOUT
-    private CoordinatorLayout mCoorLayout;
     private int mode;
     private Menu mMenu;
     private Context mContext;
-    //LISTENER
+
+    //RESOURCE
+    private int mDividerColor;
+    @DrawableRes
+    private int mBackgroundDrawable;
+    private int mBackgroundColor;
+
+    private int mTintColor = -1;
+    private int mTitleTextColor;
+    private int mItemTextColor;
+
     private BottomSheetItemClickListener bottomSheetItemClickListener;
     private EMBottomSheetAdapterBuilder adapterBuilder;
-    private CoordinatorLayout coordinatorLayout;
+    private CoordinatorLayout mCoordinatorLayout;
+    private AppBarLayout appBarLayout;
 
     private boolean mDelayedDismiss = true;
     private boolean mExpandOnStart = false;
-    private AppBarLayout appBarLayout;
+
+
+
 
     public EMBottomSheetBuilder(Context context) {
         this(context,0);
@@ -84,16 +75,15 @@ public class EMBottomSheetBuilder {
     }
 
     public EMBottomSheetBuilder(Context context, CoordinatorLayout coordinatorLayout) {
-       this(context,0,coordinatorLayout);
+        this(context,0,coordinatorLayout);
     }
 
     public EMBottomSheetBuilder(Context context, @StyleRes int theme, CoordinatorLayout coordinatorLayout) {
         this.mContext = context;
         this.mTheme = theme;
-        this.mCoorLayout = coordinatorLayout;
+        this.mCoordinatorLayout = coordinatorLayout;
         adapterBuilder  = new EMBottomSheetAdapterBuilder(context);
     }
-
 
     public EMBottomSheetBuilder setMode(@IntRange(from = 0, to = 1) int mode) {
         if(mode != MODE_LIST && mode != MODE_GRID){
@@ -117,86 +107,13 @@ public class EMBottomSheetBuilder {
         return this;
     }
 
-    //DRAWABLE
-    public EMBottomSheetBuilder setBackgroundDrawable(@DrawableRes int drawable) {
-        this.mBackgroundDrawable = drawable;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setItemDrawable(@DrawableRes int drawable) {
-        this.mItemDrawable = drawable;
-        return this;
-    }
-
-    //COLOR
-    public EMBottomSheetBuilder setBackgroundColor(@ColorInt int color) {
-        this.mBackgroundColor = color;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setItemBackgroundColor(@ColorInt int color) {
-        this.mItemBackgroundColor = color;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setItemTextColor(@ColorInt int color) {
-        this.mItemTextColor = color;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setTitleTextColor(@ColorInt int color) {
-        this.mTitleTextColor = color;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setDividerColor(@ColorInt int color) {
-        this.mDividerColor = color;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setTintColor(int mTintColor) {
-        this.mTintColor = mTintColor;
-        return this;
-    }
-
-
-    public EMBottomSheetBuilder setDelayedDismiss(boolean mDelayedDismiss) {
-        this.mDelayedDismiss = mDelayedDismiss;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setExpandOnStart(boolean mExpandOnStart) {
-        this.mExpandOnStart = mExpandOnStart;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setAppBarLayout(AppBarLayout appBarLayout) {
-        this.appBarLayout = appBarLayout;
-        return this;
-    }
-
-    public EMBottomSheetBuilder setBottomSheetItemClickListener(BottomSheetItemClickListener bottomSheetItemClickListener) {
-        this.bottomSheetItemClickListener = bottomSheetItemClickListener;
-        return this;
-    }
-
-    //ADD DIVIDER ITEM
-    public EMBottomSheetBuilder addDividerItem() {
-        if (mode == EMBottomSheetBuilder.MODE_GRID) {
-            throw new IllegalStateException("You can't add a divider with MODE_GRID. " +
-                    "Use MODE_LIST instead");
-        }
-        adapterBuilder.addDividerItem(mDividerColor);
-        return this;
-    }
-
     //ADD TITLE ITEM
     public EMBottomSheetBuilder addTitleItem(@StringRes int titleId){
         return addTitleItem(mContext.getString(titleId));
     }
 
     public EMBottomSheetBuilder addTitleItem(String title){
-         return addTitleItem(title,0);
+        return addTitleItem(title,0);
     }
 
     public EMBottomSheetBuilder addTitleItem(String title, @ColorInt int textColor) {
@@ -207,76 +124,93 @@ public class EMBottomSheetBuilder {
         return addTitleItem(title,textColor,0,icon);
     }
 
-    public EMBottomSheetBuilder addTitleItem(String title, @ColorInt int textColor,@ColorInt int textBackground,@DrawableRes int icon) {
+    public EMBottomSheetBuilder addTitleItem(String title, @ColorInt int textColor,@ColorInt int titleBackground,@DrawableRes int icon) {
         if (mode == MODE_GRID) {
             throw new IllegalStateException("You can't add a title with MODE_GRID. " +
                     "Use MODE_LIST instead");
         }
-        adapterBuilder.addTitleItem(title,textColor,textBackground,icon);
+        adapterBuilder.addTitleItem(title,textColor,titleBackground,icon);
         return this;
     }
 
+    //ADD DIVIDER ITEM
+    public EMBottomSheetBuilder addDividerItem(@ColorInt int color) {
+        if (mode == EMBottomSheetBuilder.MODE_GRID) {
+            throw new IllegalStateException("You can't add a divider with MODE_GRID. " +
+                    "Use MODE_LIST instead");
+        }
+        if(color != 0){
+            this.mDividerColor = color;
+        }
+        adapterBuilder.addDividerItem(mDividerColor);
+        return this;
+    }
+
+    public EMBottomSheetBuilder setDividerColor(@ColorInt int color) {
+        this.mDividerColor = color;
+        return this;
+    }
 
     //ADD ITEM
     public EMBottomSheetBuilder addItem(int id, String title) {
-        return addItemWithIcon(id,title,0);
+        return addItem(id,title,0);
     }
 
     public EMBottomSheetBuilder addItem(int id, @StringRes int titleId) {
-        return addItemWithIcon(id,mContext.getString(titleId),0);
+        return addItem(id,mContext.getString(titleId),0);
     }
 
-    public EMBottomSheetBuilder addItem(int id, int titleId, @ColorInt int textColor) {
-        return addItemWithIcon(id,mContext.getString(titleId),0,textColor,0,0);
+    public EMBottomSheetBuilder addItem(int id, @StringRes int titleId,@DrawableRes int icon) {
+        return addItem(id,mContext.getString(titleId),icon);
     }
 
-    public EMBottomSheetBuilder addItem(int id, String title, @ColorInt int textColor) {
-        return addItemWithIcon(id,title,0,textColor,0,0);
+    public EMBottomSheetBuilder addItem(int id, String title,@DrawableRes int icon) {
+        return addItem(id,title,0,icon);
     }
 
-    public EMBottomSheetBuilder addItemWithIcon(int id, String title, @DrawableRes int icon) {
-        return addItemWithIcon(id,title,icon,0,0,0);
+    public EMBottomSheetBuilder addItem(int id, int titleId, @ColorInt int textColor,@DrawableRes int icon) {
+        return addItem(id,mContext.getString(titleId),textColor,icon);
     }
 
-    public EMBottomSheetBuilder addItemWithIcon(int id, @StringRes int titleId, @DrawableRes int icon) {
-        return addItemWithIcon(id,mContext.getString(titleId),icon,0,0,0);
+    public EMBottomSheetBuilder addItem(int id, String title, @ColorInt int textColor,@DrawableRes int icon) {
+        return addItem(id,title,textColor,icon,0);
     }
 
-    public EMBottomSheetBuilder addItemWithIcon(int id, @StringRes int titleId, @DrawableRes int icon,
-                                @ColorInt int textColor, @ColorInt int itemBackground, @ColorInt int tintColor) {
-        return addItemWithIcon(id,mContext.getString(titleId),icon,textColor,itemBackground,tintColor);
-    }
 
-    public EMBottomSheetBuilder addItemWithIcon(int id, String title, @DrawableRes int icon,
-                                @ColorInt int textColor, @ColorInt int itemBackground, @ColorInt int tintColor) {
-        adapterBuilder.addItem(id,title,icon,textColor,itemBackground,tintColor);
+    public EMBottomSheetBuilder addItem(int id, String title, @ColorInt int textColor, @DrawableRes int icon,@ColorInt int itemBackground) {
+        addItem(id,title,textColor,icon,itemBackground,0);
         return this;
     }
 
+    public EMBottomSheetBuilder addItem(int id, String title, @ColorInt int textColor,
+                                        @DrawableRes int icon,@ColorInt int itemBackground, @ColorInt int tintColor) {
+        adapterBuilder.addItem(id,title,textColor,icon,itemBackground,tintColor);
+        return this;
+    }
 
     /**
      * CREATE BOTTOMSHEET,MUST APPLY COORDINATORLAYOUT
      */
-    public View createBottomSheet(){
+    public View createSheetView(){
 
         if(mMenu == null && adapterBuilder.getSheetItemList().isEmpty()){
-                throw new IllegalStateException("You need to provide at least one Menu " +
-                        "or an item with addItem");
+            throw new IllegalStateException("You need to provide at least one Menu " +
+                    "or an item with addItem");
         }
 
-        if (coordinatorLayout == null) {
-                throw new IllegalStateException("You need to provide a coordinatorLayout" +
-                        "so the view can be placed on it");
+        if (mCoordinatorLayout == null) {
+            throw new IllegalStateException("You need to provide a coordinatorLayout" +
+                    "so the view can be placed on it");
         }
 
         View bottomSheet = adapterBuilder.createSheetView(mTitleTextColor,mItemTextColor,mTitleTextColor,
                 mBackgroundColor,mBackgroundDrawable,mTintColor,mDividerColor,bottomSheetItemClickListener);
 
-//        ViewCompat.setElevation(sheet, mContext.getResources()
-//                .getDimensionPixelSize(R.dimen.bottomsheet_elevation));
-//
+        ViewCompat.setElevation(bottomSheet, mContext.getResources()
+                .getDimensionPixelSize(R.dimen.bottomsheet_elevation));
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            sheet.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
+//            bottomSheet.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
 //        }
 
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -290,13 +224,13 @@ public class EMBottomSheetBuilder {
                     .getDimensionPixelSize(R.dimen.bottomsheet_width);
         }
 
-        coordinatorLayout.addView(bottomSheet,layoutParams);
-        coordinatorLayout.postInvalidate();
+        mCoordinatorLayout.addView(bottomSheet,layoutParams);
+        mCoordinatorLayout.postInvalidate();
         return bottomSheet;
     }
 
 
-    public EMBottomSheetDialog createBottomSheetMenuDialog(){
+    public EMBottomSheetDialog createSheetDialog(){
         if(mMenu == null && adapterBuilder.getSheetItemList().isEmpty()){
             throw new IllegalStateException("You need to provide at least one Menu " +
                     "or an item with addItem");
@@ -360,5 +294,57 @@ public class EMBottomSheetBuilder {
         }
 
         typedArray.recycle();
+    }
+
+
+    //SET
+    public EMBottomSheetBuilder setBackgroundDrawable(@DrawableRes int drawable) {
+        this.mBackgroundDrawable = drawable;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setBackgroundColor(@ColorInt int color) {
+        this.mBackgroundColor = color;
+        return this;
+    }
+    public EMBottomSheetBuilder setBackgroundColorResource(@ColorRes int background) {
+        mBackgroundColor = ResourcesCompat.getColor(mContext.getResources(), background,
+                mContext.getTheme());
+        return this;
+    }
+
+    public EMBottomSheetBuilder setItemTextColor(@ColorInt int color) {
+        this.mItemTextColor = color;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setTitleTextColor(@ColorInt int color) {
+        this.mTitleTextColor = color;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setTintColor(int mTintColor) {
+        this.mTintColor = mTintColor;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setDelayedDismiss(boolean mDelayedDismiss) {
+        this.mDelayedDismiss = mDelayedDismiss;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setExpandOnStart(boolean mExpandOnStart) {
+        this.mExpandOnStart = mExpandOnStart;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setAppBarLayout(AppBarLayout appBarLayout) {
+        this.appBarLayout = appBarLayout;
+        return this;
+    }
+
+    public EMBottomSheetBuilder setBottomSheetItemClickListener(BottomSheetItemClickListener bottomSheetItemClickListener) {
+        this.bottomSheetItemClickListener = bottomSheetItemClickListener;
+        return this;
     }
 }

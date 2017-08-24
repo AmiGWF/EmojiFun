@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="?android:attr/selectableItemBackground"
+              android:layout_marginTop="@dimen/item_margin_8"
+              android:clickable="true"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <ImageView
         android:id="@+id/adapter_item_icon"
-        android:layout_width="@dimen/bottom_sheet_dialog_item_icon_24"
-        android:layout_height="@dimen/bottom_sheet_dialog_item_icon_24"
+        android:layout_width="@dimen/item_icon_24"
+        android:layout_height="@dimen/item_icon_24"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/adapter_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bottom_sheet_dialog_margin_4"
+        android:layout_marginTop="@dimen/grid_margin_top_4"
         android:text="@string/app_name"
-        android:textSize="@dimen/bottom_sheet_dialog_header_font_16" />
+        android:textSize="@dimen/item_font_16"/>
 </LinearLayout>
