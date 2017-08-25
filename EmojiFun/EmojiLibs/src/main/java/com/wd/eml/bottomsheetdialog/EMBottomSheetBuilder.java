@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import com.wd.eml.R;
 import com.wd.eml.bottomsheetdialog.adapter.EMBottomSheetAdapterBuilder;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
+import com.wd.eml.utils.EMLog;
 
 /**
  * author : wudu
@@ -48,6 +49,7 @@ public class EMBottomSheetBuilder {
     @DrawableRes
     private int mBackgroundDrawable;
     private int mBackgroundColor;
+    private int mTitleBackgroundColor;
 
     private int mTintColor = -1;
     private int mTitleTextColor;
@@ -203,9 +205,10 @@ public class EMBottomSheetBuilder {
                     "so the view can be placed on it");
         }
 
-        View bottomSheet = adapterBuilder.createSheetView(mTitleTextColor,mItemTextColor,mTitleTextColor,
+        View bottomSheet = adapterBuilder.createSheetView(mTitleTextColor,mItemTextColor,mTitleBackgroundColor,
                 mBackgroundColor,mBackgroundDrawable,mTintColor,mDividerColor,bottomSheetItemClickListener);
 
+        EMLog.d("build createSheetView   mTitleBackgroundColor : "+mTitleBackgroundColor);
         ViewCompat.setElevation(bottomSheet, mContext.getResources()
                 .getDimensionPixelSize(R.dimen.bottomsheet_elevation));
 
@@ -253,7 +256,7 @@ public class EMBottomSheetBuilder {
         }
 
         View sheetViewDialog = adapterBuilder.createSheetView(mTitleTextColor,mItemTextColor,
-                mTitleTextColor,mBackgroundColor,mBackgroundDrawable,
+                mTitleBackgroundColor,mBackgroundColor,mBackgroundDrawable,
                 mTintColor,mDividerColor,dialog);
 
         //sheetViewDialog.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
@@ -303,28 +306,32 @@ public class EMBottomSheetBuilder {
         return this;
     }
 
-    public EMBottomSheetBuilder setBackgroundColor(@ColorInt int color) {
-        this.mBackgroundColor = color;
+    public EMBottomSheetBuilder setBackgroundColor(@ColorRes int color) {
+        this.mBackgroundColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
     public EMBottomSheetBuilder setBackgroundColorResource(@ColorRes int background) {
-        mBackgroundColor = ResourcesCompat.getColor(mContext.getResources(), background,
-                mContext.getTheme());
+        mBackgroundColor = ResourcesCompat.getColor(mContext.getResources(), background, mContext.getTheme());
         return this;
     }
 
-    public EMBottomSheetBuilder setItemTextColor(@ColorInt int color) {
-        this.mItemTextColor = color;
+    public EMBottomSheetBuilder setTitleBackgroundColor(@ColorRes int color) {
+        this.mTitleBackgroundColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
 
-    public EMBottomSheetBuilder setTitleTextColor(@ColorInt int color) {
-        this.mTitleTextColor = color;
+    public EMBottomSheetBuilder setItemTextColor(@ColorRes int color) {
+        this.mItemTextColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
 
-    public EMBottomSheetBuilder setTintColor(int mTintColor) {
-        this.mTintColor = mTintColor;
+    public EMBottomSheetBuilder setTitleTextColor(@ColorRes int color) {
+        this.mTitleTextColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
+        return this;
+    }
+
+    public EMBottomSheetBuilder setTintColor(@ColorRes int color) {
+        this.mTintColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
 

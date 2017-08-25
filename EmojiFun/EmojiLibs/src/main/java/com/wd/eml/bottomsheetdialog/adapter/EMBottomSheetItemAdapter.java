@@ -14,6 +14,7 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetHeader;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItem;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetMenuItem;
+import com.wd.eml.utils.EMLog;
 
 import java.util.List;
 
@@ -168,26 +169,28 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
     class HeaderViewHolder extends ViewHolder {
         private ImageView imageView;
         private TextView textView;
+        private View headerView;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.sheet_header_icon);
             textView = (TextView) itemView.findViewById(R.id.sheet_header_text);
+            headerView =  itemView.findViewById(R.id.sheet_header);
         }
 
         public void setData(BottomSheetHeader header) {
-            if (header.getmIcon() != 0) {
-                imageView.setImageResource(header.getmIcon());
+            if (header.getIcon() != 0) {
+                imageView.setImageResource(header.getIcon());
                 imageView.setVisibility(View.VISIBLE);
             }
 
             textView.setText(header.getText());
-            if (header.getmTextColor() != 0) {
-                textView.setTextColor(header.getmTextColor());
+            if (header.getTextColor() != 0) {
+                textView.setTextColor(header.getTextColor());
             }
-
-            if (header.getmTextBackground() != 0) {
-                itemView.setBackgroundColor(header.getmTextBackground());
+            EMLog.d("header.getTextBackground()   ="+header.getBackground());
+            if (header.getBackground() != 0) {
+                headerView.setBackgroundColor(header.getBackground());
             }
         }
     }

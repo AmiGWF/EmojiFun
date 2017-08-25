@@ -16,26 +16,25 @@ public class BottomSheetHeader implements BottomSheetItem {
     private int mTextColor;
 
     @ColorInt
-    private int mTextBackground;
+    private int mBackground;
 
     @DrawableRes
     private int mIcon;
 
 
-
-    public BottomSheetHeader(String mText, @ColorInt int mTextColor) {
-        this(mText, mTextColor, 0);
+    public BottomSheetHeader(String text, @ColorInt int textColor) {
+        this(text, textColor, 0);
     }
 
-    public BottomSheetHeader(String mText, @ColorInt int mTextColor, @DrawableRes int mIcon) {
-       this(mText,mTextColor,0,mIcon);
+    public BottomSheetHeader(String text, @ColorInt int textColor, @DrawableRes int mIcon) {
+        this(text, textColor, 0, mIcon);
     }
 
-    public BottomSheetHeader(String mText, @ColorInt int mTextColor, @ColorInt int mTextBackground,@DrawableRes int mIcon) {
-        this.mText = mText;
-        this.mTextColor = mTextColor;
-        this.mIcon = mIcon;
-        this.mTextBackground = mTextBackground;
+    public BottomSheetHeader(String text, @ColorInt int textColor, @ColorInt int background, @DrawableRes int icon) {
+        this.mText = text;
+        this.mTextColor = textColor;
+        this.mIcon = icon;
+        this.mBackground = background;
     }
 
     @Override
@@ -43,15 +42,16 @@ public class BottomSheetHeader implements BottomSheetItem {
         return mText;
     }
 
-    public int getmTextColor() {
+
+    public int getTextColor() {
         return mTextColor;
     }
 
-    public int getmTextBackground() {
-        return mTextBackground;
+    public int getBackground() {
+        return mBackground;
     }
 
-    public int getmIcon() {
+    public int getIcon() {
         return mIcon;
     }
 }

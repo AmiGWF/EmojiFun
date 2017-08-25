@@ -23,6 +23,7 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetHeader;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItem;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetMenuItem;
+import com.wd.eml.utils.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,17 +124,28 @@ public class EMBottomSheetAdapterBuilder {
         }
 
         //IF JUST HAS ONLY ONE TITLE ITEM && IT'S THE FIRST ITEM
+
+        EMLog.d("来时谁title背景 : "+titleBackground+",  sizse = "+mTitles);
+
         if (mTitles == 1 && mode == EMBottomSheetBuilder.MODE_LIST) {
+            EMLog.d("来时谁title背景 : "+titleBackground);
             BottomSheetItem titleSheetItem = sheetItemList.get(0);
+            View titleHeader = sheetDialog.findViewById(R.id.sheet_header);
             ImageView titleIcon = (ImageView) sheetDialog.findViewById(R.id.sheet_header_icon);
             TextView titleText = (TextView) sheetDialog.findViewById(R.id.sheet_header_text);
             if (titleSheetItem instanceof BottomSheetHeader) {
                 titleText.setText(titleSheetItem.getText());
-                if (titleBackground != 0) {
+                if (titleTextColor != 0) {
                     titleText.setTextColor(titleTextColor);
                 }
-                if(((BottomSheetHeader) titleSheetItem).getmIcon() != 0){
-                    titleIcon.setImageResource(((BottomSheetHeader) titleSheetItem).getmIcon());
+
+                if(titleBackground != 0){
+                    titleHeader.setBackgroundColor(titleBackground);
+                    EMLog.d("来时谁title背景 : "+titleBackground);
+                }
+
+                if(((BottomSheetHeader) titleSheetItem).getIcon() != 0){
+                    titleIcon.setImageResource(((BottomSheetHeader) titleSheetItem).getIcon());
                 }
                 //WHY--BECAUSE HEADER TITLE SHOW
                 sheetItemList.remove(0);

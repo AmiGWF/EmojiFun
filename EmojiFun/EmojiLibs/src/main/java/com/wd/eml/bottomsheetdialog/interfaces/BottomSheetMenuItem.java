@@ -33,7 +33,7 @@ public class BottomSheetMenuItem implements BottomSheetItem {
         mItemId = menuItem.getItemId();
         mItemIcon = menuItem.getIcon();
 
-        if (tintColor != 0) {
+        if (tintColor != -1) {
             mItemIcon = DrawableCompat.wrap(mItemIcon);
             DrawableCompat.setTint(mItemIcon, mTintColor);
         }
