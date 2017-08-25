@@ -64,7 +64,7 @@ public class BottomSheetMenuItem implements BottomSheetItem {
         return mItemIcon;
     }
 
-    public MenuItem getmMenuItem() {
+    public MenuItem getMenuItem() {
         return mMenuItem;
     }
 

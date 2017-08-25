@@ -23,7 +23,6 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetHeader;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItem;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetMenuItem;
-import com.wd.eml.utils.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,11 +123,7 @@ public class EMBottomSheetAdapterBuilder {
         }
 
         //IF JUST HAS ONLY ONE TITLE ITEM && IT'S THE FIRST ITEM
-
-        EMLog.d("来时谁title背景 : "+titleBackground+",  sizse = "+mTitles);
-
         if (mTitles == 1 && mode == EMBottomSheetBuilder.MODE_LIST) {
-            EMLog.d("来时谁title背景 : "+titleBackground);
             BottomSheetItem titleSheetItem = sheetItemList.get(0);
             View titleHeader = sheetDialog.findViewById(R.id.sheet_header);
             ImageView titleIcon = (ImageView) sheetDialog.findViewById(R.id.sheet_header_icon);
@@ -141,7 +136,6 @@ public class EMBottomSheetAdapterBuilder {
 
                 if(titleBackground != 0){
                     titleHeader.setBackgroundColor(titleBackground);
-                    EMLog.d("来时谁title背景 : "+titleBackground);
                 }
 
                 if(((BottomSheetHeader) titleSheetItem).getIcon() != 0){

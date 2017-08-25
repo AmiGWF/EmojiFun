@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 
@@ -38,14 +39,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view.getId() == R.id.coor_click){
             Menu menu = new MenuBuilder(this);
-            menu.addSubMenu("2222");
-            menu.add(Menu.NONE, Menu.NONE, 1, "菜单1");
-            menu.add(Menu.NONE, Menu.NONE, 2, "菜单2");
-            menu.add(Menu.NONE, Menu.NONE, 3, "菜单3");
-            menu.add(Menu.NONE, Menu.NONE, 4, "菜单4");
-            menu.addSubMenu("hhhhhhh");
-            menu.add(Menu.NONE, Menu.NONE, 5, "菜单5");
-            menu.add(Menu.NONE, Menu.NONE, 6, "菜单6");
+            SubMenu menu1 = menu.addSubMenu(Menu.NONE, Menu.NONE, 1, "标题");
+            menu1.add(Menu.NONE, Menu.NONE, 1, "菜单1").setIcon(R.drawable.em_ic_camera);
+            menu1.add(Menu.NONE, Menu.NONE, 2, "菜单2").setIcon(R.drawable.em_ic_camera);
+            menu1.add(Menu.NONE, Menu.NONE, 3, "菜单3");
+            menu1.add(Menu.NONE, Menu.NONE, 4, "菜单4");
+
             View view1 = new EMBottomSheetBuilder(this,coordinatorLayout)
                     .setMode(BottomSheetBuilder.MODE_LIST)
                     .addTitleItem("Title")

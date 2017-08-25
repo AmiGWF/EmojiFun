@@ -160,7 +160,7 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
         public void onClick(View v) {
             BottomSheetMenuItem item = (BottomSheetMenuItem) sheetItems.get(getLayoutPosition());
             if (sheetItemClickListener != null) {
-                sheetItemClickListener.onBottomSheetItemClick(item.getmMenuItem());
+                sheetItemClickListener.onBottomSheetItemClick(item.getMenuItem());
             }
 
         }
