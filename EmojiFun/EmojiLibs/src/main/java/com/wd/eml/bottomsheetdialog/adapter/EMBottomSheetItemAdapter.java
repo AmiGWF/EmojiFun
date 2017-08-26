@@ -14,7 +14,6 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetHeader;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItem;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetMenuItem;
-import com.wd.eml.utils.EMLog;
 
 import java.util.List;
 
@@ -33,6 +32,8 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
     private int mGridItemWidth;
     private List<BottomSheetItem> sheetItems;
     private BottomSheetItemClickListener sheetItemClickListener;
+
+    private boolean hideHeaderLine = false;
 
     public EMBottomSheetItemAdapter(int mode, List<BottomSheetItem> sheetItems, BottomSheetItemClickListener
             sheetItemClickListener) {
@@ -84,7 +85,17 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
     @Override
     public void onBindViewHolder(EMBottomSheetItemAdapter.ViewHolder holder, int position) {
         BottomSheetItem bottomSheetItem = sheetItems.get(position);
+
         if (mode == EMBottomSheetBuilder.MODE_LIST) {
+            if(position < sheetItems.size() - 1){
+                BottomSheetItem nextItem = sheetItems.get(position + 1);
+                if(nextItem instanceof BottomSheetDivider){
+                    hideHeaderLine = true;
+                }else {
+                    hideHeaderLine = false;
+                }
+            }
+
             if (holder.getItemViewType() == TYPE_ITEM) {
                 ((ItemViewHolder) holder).setData((BottomSheetMenuItem) bottomSheetItem);
             } else if (holder.getItemViewType() == TYPE_HEADER) {
@@ -94,7 +105,7 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
             } else {
                 throw new IllegalArgumentException("holder.getItemViewType type is not allow");
             }
-        } else{
+        } else {
             ((ItemViewHolder) holder).setData((BottomSheetMenuItem) bottomSheetItem);
         }
     }
@@ -142,7 +153,7 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
             if (menuItem.getItemIcon() != null) {
                 imageView.setImageDrawable(menuItem.getItemIcon());
                 imageView.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 imageView.setVisibility(View.GONE);
             }
 
@@ -169,28 +180,35 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
     class HeaderViewHolder extends ViewHolder {
         private ImageView imageView;
         private TextView textView;
-        private View headerView;
+        private View lineView,headerView;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.sheet_header_icon);
             textView = (TextView) itemView.findViewById(R.id.sheet_header_text);
-            headerView =  itemView.findViewById(R.id.sheet_header);
+            lineView = itemView.findViewById(R.id.sheet_header_line);
+            headerView = itemView.findViewById(R.id.sheet_header);
         }
 
         public void setData(BottomSheetHeader header) {
             if (header.getIcon() != 0) {
                 imageView.setImageResource(header.getIcon());
                 imageView.setVisibility(View.VISIBLE);
+            } else {
+                imageView.setVisibility(View.GONE);
             }
 
             textView.setText(header.getText());
             if (header.getTextColor() != 0) {
                 textView.setTextColor(header.getTextColor());
             }
-            EMLog.d("header.getTextBackground()   ="+header.getBackground());
+
             if (header.getBackground() != 0) {
                 headerView.setBackgroundColor(header.getBackground());
+            }
+
+            if(hideHeaderLine){
+                lineView.setVisibility(View.GONE);
             }
         }
     }

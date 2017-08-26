@@ -42,7 +42,6 @@ public class BottomSheetHeader implements BottomSheetItem {
         return mText;
     }
 
-
     public int getTextColor() {
         return mTextColor;
     }

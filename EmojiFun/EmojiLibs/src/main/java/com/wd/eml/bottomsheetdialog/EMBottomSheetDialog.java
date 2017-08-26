@@ -20,15 +20,15 @@ import android.widget.FrameLayout;
 import com.wd.eml.R;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.utils.BottomSheetDialogUtil;
+import com.wd.eml.utils.EMLog;
 
 /**
  * author : wudu
  * time : 2017/8/18
  * Hi,Baby.
- *
  */
 
-public class EMBottomSheetDialog extends BottomSheetDialog implements BottomSheetItemClickListener{
+public class EMBottomSheetDialog extends BottomSheetDialog implements BottomSheetItemClickListener {
     private BottomSheetBehavior behavior;
     private BottomSheetBehavior.BottomSheetCallback callback;
     private AppBarLayout appBarLayout;
@@ -53,54 +53,54 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setLayoutHeight();
+        setLayoutHeight();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         final FrameLayout bottomSheet = (FrameLayout) findViewById(R.id.design_bottom_sheet);
-        if(bottomSheet != null){
+        if (bottomSheet != null) {
             behavior = BottomSheetBehavior.from(bottomSheet);
             behavior.setBottomSheetCallback(bottomSheetCallback);
             behavior.setSkipCollapsed(true);
 
             //IS LANDSPACE
-            if(getContext().getResources().getBoolean(R.bool.tablet_landscape)){
+            if (getContext().getResources().getBoolean(R.bool.tablet_landscape)) {
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) bottomSheet.getLayoutParams();
                 params.width = getContext().getResources().getDimensionPixelSize(R.dimen.bottomsheet_width);
                 bottomSheet.setLayoutParams(params);
             }
 
             //Make sure the sheet doesn't overlap the appbar
-            if(appBarLayout != null){
-                if(appBarLayout.getHeight() == 0){
+            if (appBarLayout != null) {
+                if (appBarLayout.getHeight() == 0) {
                     appBarLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override
                         public void onGlobalLayout() {
                             applyAppbarMargin(bottomSheet);
                         }
                     });
-                }else{
+                } else {
                     applyAppbarMargin(bottomSheet);
                 }
             }
 
             //FIX PEEKHEIGHT
-            if(getContext().getResources().getBoolean(R.bool.landscape)){
+            if (getContext().getResources().getBoolean(R.bool.landscape)) {
                 fixLandspacePeekHeight(bottomSheet);
             }
 
             //EXPAND
-            if(mExpandOnStart){
+            if (mExpandOnStart) {
                 bottomSheet.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        if(behavior.getState() == BottomSheetBehavior.STATE_SETTLING && mRequestExpand){
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                        if (behavior.getState() == BottomSheetBehavior.STATE_SETTLING && mRequestExpand) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                 bottomSheet.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                            }else{
+                            } else {
                                 bottomSheet.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                             }
                         }
@@ -113,16 +113,16 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
 
     @Override
     public void onBottomSheetItemClick(MenuItem item) {
-        if(!mClicked){
-            if(behavior != null){
-                if(mDelayDismiss){
+        if (!mClicked) {
+            if (behavior != null) {
+                if (mDelayDismiss) {
                     BottomSheetDialogUtil.delayDismiss(behavior);
-                }else{
+                } else {
                     behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
             }
 
-            if(bottomSheetItemClickListener != null){
+            if (bottomSheetItemClickListener != null) {
                 bottomSheetItemClickListener.onBottomSheetItemClick(item);
             }
             mClicked = true;
@@ -144,9 +144,9 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
     @Override
     public void dismiss() {
         mRequestDismiss = true;
-        if(mRequestCancel){
+        if (mRequestCancel) {
             dismissWithAnimation();
-        }else{
+        } else {
             super.dismiss();
         }
     }
@@ -155,11 +155,11 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
     private BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if(callback != null){
-                callback.onStateChanged(bottomSheet,newState);
+            if (callback != null) {
+                callback.onStateChanged(bottomSheet, newState);
             }
 
-            if(newState == BottomSheetBehavior.STATE_HIDDEN){
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 behavior.setBottomSheetCallback(null);
                 try {
                     EMBottomSheetDialog.super.dismiss();
@@ -167,7 +167,7 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
                     e.printStackTrace();
                 }
 
-                if(!mClicked && ! mRequestDismiss && ! mRequestCancel && cancelListener != null){
+                if (!mClicked && !mRequestDismiss && !mRequestCancel && cancelListener != null) {
                     cancelListener.onCancel(EMBottomSheetDialog.this);
                 }
             }
@@ -175,19 +175,19 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
 
         @Override
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            if(callback != null){
-                callback.onSlide(bottomSheet,slideOffset);
+            if (callback != null) {
+                callback.onSlide(bottomSheet, slideOffset);
             }
         }
     };
 
     private void dismissWithAnimation() {
-        if(behavior != null){
+        if (behavior != null) {
             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
     }
 
-    private void fixLandspacePeekHeight(final View sheet){
+    private void fixLandspacePeekHeight(final View sheet) {
         //on landspace ,we shouldn't use the 16:9 keyline alignment
         sheet.post(new Runnable() {
             @Override
@@ -197,7 +197,7 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
         });
     }
 
-    private void applyAppbarMargin(View sheet){
+    private void applyAppbarMargin(View sheet) {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) sheet.getLayoutParams();
         params.topMargin = appBarLayout.getHeight();
         sheet.setLayoutParams(params);
@@ -232,11 +232,13 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
      * UPDATE LAYOUT HEIGHT
      */
     private void setLayoutHeight() {
-        int screenHeight = getScreenHeight(getOwnerActivity());
-        int statusBarHeight = getStatusBarHeight(getContext());
-        int dialogHeight = screenHeight - statusBarHeight;
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams
-                .MATCH_PARENT : dialogHeight);
+        if (getOwnerActivity() != null) {
+            int screenHeight = getScreenHeight(getOwnerActivity());
+            int statusBarHeight = getStatusBarHeight(getContext());
+            int dialogHeight = screenHeight - statusBarHeight;
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams
+                    .MATCH_PARENT : dialogHeight);
+        }
     }
 
     private int getScreenHeight(Activity activity) {
@@ -254,6 +256,4 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
         }
         return statusBarHeight;
     }
-
-
 }

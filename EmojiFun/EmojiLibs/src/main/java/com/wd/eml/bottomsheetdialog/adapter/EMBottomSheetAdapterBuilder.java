@@ -23,7 +23,9 @@ import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetHeader;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItem;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetMenuItem;
+import com.wd.eml.utils.EMLog;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,20 @@ public class EMBottomSheetAdapterBuilder {
 
     public void setMenu(Menu menu) {
         this.mMenu = menu;
+        setMenuIconEnable(mMenu);
         isFromMenu = true;
+    }
+
+    private void setMenuIconEnable(Menu menu){
+        try {
+            Class clazz = Class.forName("com.android.internal.view.menu.MenuBuilder");
+            Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+            m.setAccessible(true);
+            //MenuBuilder实现Menu接口，创建菜单时，传进来的menu其实就是MenuBuilder对象(java的多态特征)
+            m.invoke(menu, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setMode(int mode) {
@@ -64,7 +79,9 @@ public class EMBottomSheetAdapterBuilder {
      * addDividerItem
      **/
     public void addDividerItem(int dividerBackground) {
-        sheetItemList.add(new BottomSheetDivider(dividerBackground));
+        if(sheetItemList != null && sheetItemList.size() > 0){
+            sheetItemList.add(new BottomSheetDivider(dividerBackground));
+        }
     }
 
     /**
@@ -86,8 +103,6 @@ public class EMBottomSheetAdapterBuilder {
         MenuItem menuItem = mMenu.add(Menu.NONE, id, Menu.NONE, title);
         if (icon != 0) {
             menuItem.setIcon(icon);
-        }else{
-            menuItem.setIcon(null);
         }
         sheetItemList.add(new BottomSheetMenuItem(menuItem, textColor, itemBackground, tintColor));
     }
@@ -105,9 +120,21 @@ public class EMBottomSheetAdapterBuilder {
             bottomSheetItemClickListener) {
         //如果是外界传进来的menu 就直接创建item
         if (isFromMenu) {
-            sheetItemList = createAdapterItems(titleTextColor, itemTextColor, titleBackground, itemBackground,
+            List<BottomSheetItem> menuList = createAdapterItems(titleTextColor, itemTextColor, titleBackground, itemBackground,
                     tintColor, dividerBackground);
+            sheetItemList.addAll(menuList);
         }
+
+        EMLog.d("sheetItemList size = "+sheetItemList.size());
+        for (int i = 0;i< sheetItemList.size();i++){
+            BottomSheetItem item = sheetItemList.get(i);
+            if(item instanceof BottomSheetHeader){
+                if(titleTextColor != 0 && ((BottomSheetHeader) item).getTextColor() !=0){
+
+                }
+            }
+        }
+
         //如果不是即使用默认的xml
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View sheetDialog = mode == EMBottomSheetBuilder.MODE_LIST ? inflater.inflate(R.layout
@@ -122,29 +149,33 @@ public class EMBottomSheetAdapterBuilder {
             sheetDialog.setBackgroundColor(itemBackground);
         }
 
-        //IF JUST HAS ONLY ONE TITLE ITEM && IT'S THE FIRST ITEM
-        if (mTitles == 1 && mode == EMBottomSheetBuilder.MODE_LIST) {
-            BottomSheetItem titleSheetItem = sheetItemList.get(0);
-            View titleHeader = sheetDialog.findViewById(R.id.sheet_header);
-            ImageView titleIcon = (ImageView) sheetDialog.findViewById(R.id.sheet_header_icon);
-            TextView titleText = (TextView) sheetDialog.findViewById(R.id.sheet_header_text);
-            if (titleSheetItem instanceof BottomSheetHeader) {
-                titleText.setText(titleSheetItem.getText());
-                if (titleTextColor != 0) {
-                    titleText.setTextColor(titleTextColor);
-                }
-
-                if(titleBackground != 0){
-                    titleHeader.setBackgroundColor(titleBackground);
-                }
-
-                if(((BottomSheetHeader) titleSheetItem).getIcon() != 0){
-                    titleIcon.setImageResource(((BottomSheetHeader) titleSheetItem).getIcon());
-                }
-                //WHY--BECAUSE HEADER TITLE SHOW
-                sheetItemList.remove(0);
-            }
-        }
+        //IF JUST HAS ONLY ONE TITLE ITEM && IT'S THE FIRST ITEM,SHOW IN LIST
+//        if (mTitles == 1 && mode == EMBottomSheetBuilder.MODE_LIST) {
+//            BottomSheetItem titleSheetItem = sheetItemList.get(0);
+//            View titleHeader = sheetDialog.findViewById(R.id.bottomsheetdialog_header);
+//            titleHeader.setVisibility(View.VISIBLE);
+//            ImageView titleIcon = (ImageView) sheetDialog.findViewById(R.id.sheet_header_icon);
+//            TextView titleText = (TextView) sheetDialog.findViewById(R.id.sheet_header_text);
+//            if (titleSheetItem instanceof BottomSheetHeader) {
+//                titleText.setText(titleSheetItem.getText());
+//                if (titleTextColor != 0) {
+//                    titleText.setTextColor(titleTextColor);
+//                }
+//
+//                if(titleBackground != 0){
+//                    titleHeader.setBackgroundColor(titleBackground);
+//                }
+//
+//                if(((BottomSheetHeader) titleSheetItem).getIcon() != 0){
+//                    titleIcon.setImageResource(((BottomSheetHeader) titleSheetItem).getIcon());
+//                    titleIcon.setVisibility(View.VISIBLE);
+//                }else{
+//                    titleIcon.setVisibility(View.GONE);
+//                }
+//                //WHY--BECAUSE HEADER TITLE SHOW
+//                sheetItemList.remove(0);
+//            }
+//        }
 
 
         //SET RECYCLE ADAPTER
@@ -192,12 +223,14 @@ public class EMBottomSheetAdapterBuilder {
                 if (menuItem.isVisible()) {
                     if (menuItem.hasSubMenu()) {
                         SubMenu subMenu = menuItem.getSubMenu();
+                        EMLog.d("submeu =  "+subMenu);
 
                         //1.grid没有子菜单，
                         if (mode == EMBottomSheetBuilder.MODE_GRID)
                             throw new IllegalArgumentException("MODE_GRID can't has submenus,Use MODE_LIST instead");
 
                         //2.是否有头部,可以有多个头部
+                        EMLog.d("menuitem.title  =  "+menuItem.getTitle());
                         if (!TextUtils.isEmpty(menuItem.getTitle())) {
                             if (titleBackground != 0) {
                                 bottomSheetItems.add(new BottomSheetHeader(menuItem.getTitle().toString(),
@@ -218,6 +251,7 @@ public class EMBottomSheetAdapterBuilder {
                         //3.添加item
                         if (subMenu != null) {
                             for (int j = 0; j < subMenu.size(); j++) {
+                                EMLog.d("subMenu.getItem(j)  = "+subMenu.getItem(j));
                                 MenuItem subMenuItem = subMenu.getItem(j);
                                 if (subMenuItem.isVisible()) {
                                     bottomSheetItems.add(new BottomSheetMenuItem(subMenuItem, itemTextColor,

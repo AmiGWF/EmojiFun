@@ -1,5 +1,6 @@
 package com.wd.eml.bottomsheetdialog;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
@@ -131,25 +132,23 @@ public class EMBottomSheetBuilder {
             throw new IllegalStateException("You can't add a title with MODE_GRID. " +
                     "Use MODE_LIST instead");
         }
+        if(mTitleTextColor !=0 && textColor == 0){
+            textColor = mTitleTextColor;
+        }
         adapterBuilder.addTitleItem(title,textColor,titleBackground,icon);
         return this;
     }
 
     //ADD DIVIDER ITEM
-    public EMBottomSheetBuilder addDividerItem(@ColorInt int color) {
+    public EMBottomSheetBuilder addDividerItem(@ColorRes int color) {
         if (mode == EMBottomSheetBuilder.MODE_GRID) {
             throw new IllegalStateException("You can't add a divider with MODE_GRID. " +
                     "Use MODE_LIST instead");
         }
         if(color != 0){
-            this.mDividerColor = color;
+            this.mDividerColor =  ResourcesCompat.getColor(mContext.getResources(), color,mContext.getTheme());;
         }
         adapterBuilder.addDividerItem(mDividerColor);
-        return this;
-    }
-
-    public EMBottomSheetBuilder setDividerColor(@ColorInt int color) {
-        this.mDividerColor = color;
         return this;
     }
 
@@ -275,6 +274,7 @@ public class EMBottomSheetBuilder {
             dialog.setContentView(sheetViewDialog);
         }
 
+        dialog.setOwnerActivity((Activity) mContext);
         return  dialog;
     }
 

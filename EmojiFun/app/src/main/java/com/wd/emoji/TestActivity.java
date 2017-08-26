@@ -7,12 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.wd.eml.bottomsheetdialog.EMBottomSheetBuilder;
+import com.wd.eml.bottomsheetdialog.EMBottomSheetDialog;
+import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
+import com.wd.eml.utils.EMLog;
 
 /**
  * author : wudu
@@ -39,22 +43,31 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view.getId() == R.id.coor_click){
             Menu menu = new MenuBuilder(this);
-            SubMenu menu1 = menu.addSubMenu(Menu.NONE, Menu.NONE, 1, "标题");
-            menu1.add(Menu.NONE, Menu.NONE, 1, "菜单1").setIcon(R.drawable.em_ic_camera);
-            menu1.add(Menu.NONE, Menu.NONE, 2, "菜单2").setIcon(R.drawable.em_ic_camera);
-            menu1.add(Menu.NONE, Menu.NONE, 3, "菜单3");
-            menu1.add(Menu.NONE, Menu.NONE, 4, "菜单4");
+            SubMenu menu1 = menu.addSubMenu(Menu.NONE, 33, 1, "标题");
+            menu1.add(Menu.NONE, 1, 1, "菜单1").setIcon(R.drawable.em_ic_camera);
+            menu1.add(Menu.NONE, 2, 2, "菜单2").setIcon(R.drawable.em_ic_camera);
+            menu1.add(Menu.NONE, 3, 3, "菜单3");
+            menu1.add(Menu.NONE, 4, 4, "菜单4");
 
-            View view1 = new EMBottomSheetBuilder(this,coordinatorLayout)
+            final EMBottomSheetDialog view1 = new EMBottomSheetBuilder(TestActivity.this,coordinatorLayout)
                     .setMode(BottomSheetBuilder.MODE_LIST)
-                    .addTitleItem("Title")
-                    .setMenus(menu)
+                    .addDividerItem(R.color.colorAccent)
                     .setTitleTextColor(R.color.colorAccent)
-                    .addItem(1,"item1",R.drawable.em_ic_camera)
-                    .addItem(2,"item2",R.drawable.em_ic_camera)
-                   .createSheetView();
-            behavior = BottomSheetBehavior.from(view1);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    .addTitleItem("Title")
+                    .addDividerItem(R.color.colorAccent)
+                    .addTitleItem("Titeeeeeeeeeeeeele")
+                    .addDividerItem(0)
+                    .setMenus(menu)
+                    .setBottomSheetItemClickListener(new BottomSheetItemClickListener() {
+                        @Override
+                        public void onBottomSheetItemClick(MenuItem item) {
+                            EMLog.d("click listen  "+item.getTitle());
+                        }
+                    })
+                   .createSheetDialog();
+            //behavior = BottomSheetBehavior.from(view1);
+          //  behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            view1.show();
 
 
 

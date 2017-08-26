@@ -23,10 +23,10 @@ public class BottomSheetMenuItem implements BottomSheetItem {
     private Drawable mItemIcon;
     private MenuItem mMenuItem;
 
-    public BottomSheetMenuItem(MenuItem menuItem, @ColorInt int textColor, int mItemBackground, @ColorInt int tintColor) {
+    public BottomSheetMenuItem(MenuItem menuItem, @ColorInt int textColor, int itemBackground, @ColorInt int tintColor) {
         this.mMenuItem = menuItem;
         this.mTextColor = textColor;
-        this.mItemBackground = mItemBackground;
+        this.mItemBackground = itemBackground;
         this.mTintColor = tintColor;
 
         mItemText = menuItem.getTitle().toString();
@@ -54,10 +54,6 @@ public class BottomSheetMenuItem implements BottomSheetItem {
 
     public int getItemId() {
         return mItemId;
-    }
-
-    public String getItemText() {
-        return mItemText;
     }
 
     public Drawable getItemIcon() {
