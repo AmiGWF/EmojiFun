@@ -13,8 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.wd.eml.R;
 import com.wd.eml.bottomsheetdialog.EMBottomSheetBuilder;

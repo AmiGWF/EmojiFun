@@ -1,6 +1,5 @@
 package com.wd.emoji.ui;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +24,6 @@ import com.wd.eml.bottomsheetdialog.EMBottomSheetDialog;
 import com.wd.eml.palette.EMPaletteUtil;
 import com.wd.eml.utils.EMLog;
 import com.wd.emoji.R;
-import com.wd.emoji.TestActivity;
 import com.wd.emoji.adapter.EmFragmentPagerAdapter;
 import com.wd.emoji.fragment.FragmentFour;
 import com.wd.emoji.fragment.FragmentOne;
@@ -143,9 +141,6 @@ public class EmojiMainActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_bottom_1:
                         ac_main_viewpager.setCurrentItem(0);
-
-                        //dialog.show();
-                        startActivity(new Intent(EmojiMainActivity.this, TestActivity.class));
                         break;
                     case R.id.menu_bottom_2:
                         ac_main_viewpager.setCurrentItem(1);

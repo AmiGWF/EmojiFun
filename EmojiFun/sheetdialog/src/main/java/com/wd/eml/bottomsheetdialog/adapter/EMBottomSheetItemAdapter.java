@@ -85,7 +85,6 @@ public class EMBottomSheetItemAdapter extends RecyclerView.Adapter<EMBottomSheet
     @Override
     public void onBindViewHolder(EMBottomSheetItemAdapter.ViewHolder holder, int position) {
         BottomSheetItem bottomSheetItem = sheetItems.get(position);
-
         if (mode == EMBottomSheetBuilder.MODE_LIST) {
             if(position < sheetItems.size() - 1){
                 BottomSheetItem nextItem = sheetItems.get(position + 1);

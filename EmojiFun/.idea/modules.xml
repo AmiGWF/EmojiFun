@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EmojiFun.iml" filepath="$PROJECT_DIR$/EmojiFun.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EmojiLibs/EmojiLibs.iml" filepath="$PROJECT_DIR$/EmojiLibs/EmojiLibs.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bezier/bezier.iml" filepath="$PROJECT_DIR$/bezier/bezier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sheetdialog/sheetdialog.iml" filepath="$PROJECT_DIR$/sheetdialog/sheetdialog.iml" />
     </modules>
   </component>
 </project>

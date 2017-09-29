@@ -1,1 +1,1 @@
-include ':app', ':EmojiLibs'
+include ':app', ':sheetdialog', ':bezier'

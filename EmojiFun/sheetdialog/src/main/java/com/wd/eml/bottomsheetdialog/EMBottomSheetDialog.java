@@ -20,7 +20,6 @@ import android.widget.FrameLayout;
 import com.wd.eml.R;
 import com.wd.eml.bottomsheetdialog.interfaces.BottomSheetItemClickListener;
 import com.wd.eml.bottomsheetdialog.utils.BottomSheetDialogUtil;
-import com.wd.eml.utils.EMLog;
 
 /**
  * author : wudu
@@ -237,7 +236,7 @@ public class EMBottomSheetDialog extends BottomSheetDialog implements BottomShee
             int statusBarHeight = getStatusBarHeight(getContext());
             int dialogHeight = screenHeight - statusBarHeight;
             getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams
-                    .MATCH_PARENT : dialogHeight);
+                    .WRAP_CONTENT : ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 
