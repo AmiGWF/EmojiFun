@@ -1,1 +1,1 @@
-include ':app', ':sheetdialog', ':bezier'
+include ':app', ':sheetdialog', ':bezier', ':net'

@@ -151,6 +151,8 @@ public class EmojiMainActivity extends BaseActivity {
                     case R.id.menu_bottom_4:
                         ac_main_viewpager.setCurrentItem(3);
                         break;
+                    default:
+                        break;
                 }
                 return true;
             }
@@ -183,6 +185,8 @@ public class EmojiMainActivity extends BaseActivity {
                         break;
                     case R.id.menu_nav_6:
                         break;
+                        default:
+                            break;
                 }
                 return true;
             }
