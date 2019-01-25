@@ -1,5 +1,6 @@
 package com.wd.eml.bottomnavigationview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.design.internal.BottomNavigationItemView;
@@ -7,7 +8,7 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.media.VolumeProviderCompat;
+
 
 import java.lang.reflect.Field;
 
@@ -25,7 +26,8 @@ public class EMNavUtil {
      *
      * @param navView
      */
-    @VolumeProviderCompat.ControlType
+
+    @SuppressLint("RestrictedApi")
     public static void disShiftingMode(BottomNavigationView navView) {
         try {
             BottomNavigationMenuView menuView = (BottomNavigationMenuView) navView.getChildAt(0);
@@ -35,7 +37,7 @@ public class EMNavUtil {
             var0.setAccessible(false);
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView var1 = (BottomNavigationItemView) menuView.getChildAt(i);
-                var1.setShiftingMode(false);
+                var1.setShifting(false);
                 var1.setChecked(var1.getItemData().isChecked());
             }
         } catch (Exception e) {

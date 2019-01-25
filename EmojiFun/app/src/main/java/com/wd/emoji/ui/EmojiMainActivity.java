@@ -1,5 +1,7 @@
 package com.wd.emoji.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +31,8 @@ import com.wd.emoji.fragment.FragmentFour;
 import com.wd.emoji.fragment.FragmentOne;
 import com.wd.emoji.fragment.FragmentThr;
 import com.wd.emoji.fragment.FragmentTwo;
+import com.wd.emojiui.base.BaseActivity;
+import com.wd.emojiui.pages.EmLoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +45,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * EmojiFun Main Page
  */
 
-public class EmojiMainActivity extends BaseActivity {
+public class EmojiMainActivity extends BaseActivity implements View.OnClickListener {
+    public Toolbar toolbar;
     private DrawerLayout ac_main_drawlayout;
     private LinearLayout ac_main_layout;
     private ViewPager ac_main_viewpager;
@@ -74,19 +79,29 @@ public class EmojiMainActivity extends BaseActivity {
         initBottomNavView();
         initLeftNavView();
         initBottomSheetDialog();
+        initClick();
     }
 
+    @SuppressLint("ResourceType")
     private void initView() {
+        toolbar = findViewById(R.id.ac_main_toolbar);
         ac_main_drawlayout = findView(R.id.ac_main_drawlayout);
         ac_main_layout = findView(R.id.ac_main_layout);
         ac_main_viewpager = findView(R.id.ac_main_viewpager);
         ac_main_bottom_menu = findView(R.id.ac_main_bottom_menu);
         ac_main_nav_layout = findView(R.id.ac_main_nav_layout);
-        //HEADER
-        em_header_top_bg = (CoordinatorLayout) ac_main_nav_layout.findViewById(R.id.em_header_top_bg);
-        em_header_icon = (CircleImageView) ac_main_nav_layout.findViewById(R.id.em_heander_icon);
-        em_header_name = (TextView) ac_main_nav_layout.findViewById(R.id.em_header_name);
-        em_header_tips = (TextView) ac_main_nav_layout.findViewById(R.id.em_header_tips);
+        //HEADER:此处必须使用getHeaderView先获取头部布局，否则会找不到相关控件
+        View headerView = ac_main_nav_layout.getHeaderView(0);
+        em_header_top_bg = headerView.findViewById(R.id.em_header_top_bg);
+        em_header_icon = headerView.findViewById(R.id.em_header_icon);
+        em_header_name = headerView.findViewById(R.id.em_header_name);
+        em_header_tips = headerView.findViewById(R.id.em_header_tips);
+
+    }
+
+    private void initClick() {
+        //CLICK
+        em_header_icon.setOnClickListener(this);
     }
 
     private void initFragment() {
@@ -185,8 +200,8 @@ public class EmojiMainActivity extends BaseActivity {
                         break;
                     case R.id.menu_nav_6:
                         break;
-                        default:
-                            break;
+                    default:
+                        break;
                 }
                 return true;
             }
@@ -210,8 +225,9 @@ public class EmojiMainActivity extends BaseActivity {
     }
 
 
-  EMBottomSheetDialog dialog;
-    private void initBottomSheetDialog(){
+    EMBottomSheetDialog dialog;
+
+    private void initBottomSheetDialog() {
 //       dialog = new EMBottomSheetBuilder(this)
 //               .setMode(EMBottomSheetBuilder.MODE_LIST)
 //               .addTitleItem("title")
@@ -231,6 +247,16 @@ public class EmojiMainActivity extends BaseActivity {
     @Override
     public void onClick(View view) {
         EMLog.i("--------");
+        int id = view.getId();
+        switch (id) {
+            case R.id.em_header_icon:
+                gotoLogin();
+                break;
+        }
+    }
+
+    private void gotoLogin() {
+        startActivity(new Intent(EmojiMainActivity.this, EmLoginActivity.class));
     }
 
     @Override

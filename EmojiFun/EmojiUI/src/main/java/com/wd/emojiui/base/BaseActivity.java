@@ -1,4 +1,4 @@
-package com.wd.emoji.ui;
+package com.wd.emojiui.base;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.wd.emoji.R;
 
 /**
  * author : wudu
@@ -20,7 +18,6 @@ import com.wd.emoji.R;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
     public final String TAG = "BaseAc:" + getClass().getSimpleName();
-    public Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +28,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        toolbar = (Toolbar) findViewById(R.id.ac_main_toolbar);
         setStatusBar();
     }
 
@@ -41,7 +37,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void setSDKVersion() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -72,7 +68,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      */
     public <T> T setClick(int id) {
         T t = findView(id);
-        ((View) t).setOnClickListener(this);
+        ((View) t).setOnClickListener(BaseActivity.this);
         return t;
     }
 
