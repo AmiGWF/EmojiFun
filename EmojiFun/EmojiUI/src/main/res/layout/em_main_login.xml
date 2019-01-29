@@ -56,53 +56,73 @@
         android:textSize="12sp" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/em_login_edit_bg"
-        android:orientation="vertical">
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:gravity="center">
 
-        <EditText
+        <LinearLayout
+            android:id="@+id/em_login_input_layout"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@null"
-            android:drawableLeft="@drawable/em_login_email"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical"
-            android:hint="IDEAS"
-            android:paddingLeft="12dp"
-            android:textColorHint="#CDCDCD"
-            android:textSize="12sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/em_login_edit_bg"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-        <View
+            <EditText
+                android:id="@+id/em_login_ideas"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/em_login_email"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:hint="IDEAS"
+                android:paddingLeft="12dp"
+                android:textColorHint="#CDCDCD"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/em_login_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#e6e6e6" />
+
+            <EditText
+                android:id="@+id/em_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/em_login_password"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:hint="PASS"
+                android:paddingLeft="12dp"
+                android:textColorHint="#CDCDCD"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/em_login_progressBar"
+            layout="@layout/em_main_login_progress"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#e6e6e6" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@null"
-            android:drawableLeft="@drawable/em_login_password"
-            android:drawablePadding="12dp"
-            android:gravity="center_vertical"
-            android:hint="PASS"
-            android:paddingLeft="12dp"
-            android:textColorHint="#CDCDCD"
-            android:textSize="12sp" />
-
-
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/em_login_btn"
+        android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginRight="108dp"
+        android:paddingLeft="68dp"
+        android:layout_marginTop="12dp"
+        android:paddingRight="68dp"
         android:background="@drawable/em_login_btn_bg"
         android:gravity="center"
         android:text="Login"
