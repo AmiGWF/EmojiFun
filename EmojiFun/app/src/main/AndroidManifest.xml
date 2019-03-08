@@ -5,20 +5,23 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:hardwareAccelerated="false"
         android:allowBackup="true"
         android:icon="@mipmap/em_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.wd.emoji.ui.EmojiMainActivity"
+            android:name="com.wd.emoji.ui.EmojiSplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <activity android:name=".ui.EmojiMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
     </application>
 

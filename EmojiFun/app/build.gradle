@@ -30,4 +30,5 @@ dependencies {
     implementation project(':bezier')
     implementation project(':net')
     api project(':EmojiUI')
+    implementation project(':HenCoder')
 }

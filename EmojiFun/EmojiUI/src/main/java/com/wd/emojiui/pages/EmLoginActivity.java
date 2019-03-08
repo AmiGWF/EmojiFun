@@ -20,7 +20,6 @@ public class EmLoginActivity extends BaseActivity {
     private TextView em_login_btn;
     private LinearLayout em_login_input_layout;
     private View em_login_progressBar;
-    private float mWidth, mHeight;
     private TextView em_login_ideas, em_login_password;
     private View em_login_view;
 

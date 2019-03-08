@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.wd.ac.BezierActivity;
 import com.wd.eml.ac.SheetDialogActivity;
 import com.wd.emoji.R;
+import com.wd.hencoder.ColorFilterActivity;
+import com.wd.hencoder.DrawViewActivity;
 
 /**
  * author : wudu
@@ -38,6 +40,9 @@ public class FragmentOne extends BaseFragment implements View.OnClickListener {
     private void initView() {
         contentView.findViewById(R.id.tv_sned_heart).setOnClickListener(this);
         contentView.findViewById(R.id.tv_sheet_dialog).setOnClickListener(this);
+        contentView.findViewById(R.id.tv_hencoder).setOnClickListener(this);
+        contentView.findViewById(R.id.tv_color_filter).setOnClickListener(this);
+
     }
 
     @Override
@@ -49,6 +54,12 @@ public class FragmentOne extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.tv_sheet_dialog://底部菜单
                 startActivity(new Intent(getActivity(), SheetDialogActivity.class));
+                break;
+            case R.id.tv_hencoder://自定义view
+                startActivity(new Intent(getActivity(), DrawViewActivity.class));
+                break;
+            case R.id.tv_color_filter://ColorFilter
+                startActivity(new Intent(getActivity(), ColorFilterActivity.class));
                 break;
         }
 

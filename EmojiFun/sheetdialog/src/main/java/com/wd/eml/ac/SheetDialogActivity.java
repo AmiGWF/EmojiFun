@@ -1,5 +1,6 @@
 package com.wd.eml.ac;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
@@ -43,7 +44,7 @@ public class SheetDialogActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.coor_click){
-            Menu menu = new MenuBuilder(this);
+            @SuppressLint("RestrictedApi") Menu menu = new MenuBuilder(this);
             SubMenu menu1 = menu.addSubMenu(Menu.NONE, 33, 1, "我是标题");
             menu1.add(Menu.NONE, 1, 1, "我是菜单1，我有图片").setIcon(R.mipmap.icon);
             menu1.add(Menu.NONE, 2, 2, "我是菜单2，我有图片").setIcon(R.mipmap.icon);

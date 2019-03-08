@@ -24,4 +24,26 @@
         android:text="底部菜单(sheetdialog)"
         android:textSize="16sp"/>
 
+    <TextView
+        android:id="@+id/tv_hencoder"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="#999"
+        android:gravity="center"
+        android:text="自定义View(HenCoder)"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_color_filter"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="#999"
+        android:gravity="center"
+        android:text="自定义View(ColorFilter)"
+        android:textSize="16sp"/>
+
+
+
 </LinearLayout>

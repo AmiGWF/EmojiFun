@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wd.hencoder">
+
+    <application>
+
+        <activity
+            android:name=".DrawViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".ColorFilterActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+    </application>
+</manifest>

@@ -5,7 +5,7 @@ import android.view.animation.LinearInterpolator;
 public class EMInterpolator extends LinearInterpolator {
     private float factor;
     public EMInterpolator(){
-        this.factor = 0.15f;
+        this.factor = 0.5f;
     }
 
     @Override
