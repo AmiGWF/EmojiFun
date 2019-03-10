@@ -1,1 +1,1 @@
-include ':app', ':sheetdialog', ':bezier', ':net', ':EmojiUI', ':HenCoder'
+include ':app', ':sheetdialog', ':bezier', ':net', ':EmojiUI', ':HenCoder', ':RxJavaNote'
