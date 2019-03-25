@@ -12,6 +12,7 @@ import com.wd.eml.ac.SheetDialogActivity;
 import com.wd.emoji.R;
 import com.wd.hencoder.ColorFilterActivity;
 import com.wd.hencoder.DrawViewActivity;
+import com.wd.rxn.ObservableNote;
 
 /**
  * author : wudu
@@ -59,7 +60,9 @@ public class FragmentOne extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), DrawViewActivity.class));
                 break;
             case R.id.tv_color_filter://ColorFilter
-                startActivity(new Intent(getActivity(), ColorFilterActivity.class));
+                //startActivity(new Intent(getActivity(), ColorFilterActivity.class));
+                ObservableNote.r8();
+
                 break;
         }
 

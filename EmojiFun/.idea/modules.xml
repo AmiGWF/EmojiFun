@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/EmojiFun.iml" filepath="$PROJECT_DIR$/EmojiFun.iml" />
       <module fileurl="file://$PROJECT_DIR$/EmojiUI/EmojiUI.iml" filepath="$PROJECT_DIR$/EmojiUI/EmojiUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/HenCoder/HenCoder.iml" filepath="$PROJECT_DIR$/HenCoder/HenCoder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RxJavaNote/RxJavaNote.iml" filepath="$PROJECT_DIR$/RxJavaNote/RxJavaNote.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bezier/bezier.iml" filepath="$PROJECT_DIR$/bezier/bezier.iml" />
       <module fileurl="file://$PROJECT_DIR$/net/net.iml" filepath="$PROJECT_DIR$/net/net.iml" />

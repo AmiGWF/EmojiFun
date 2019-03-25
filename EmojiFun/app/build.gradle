@@ -28,7 +28,7 @@ dependencies {
     implementation project(':sheetdialog')
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation project(':bezier')
-    implementation project(':net')
     api project(':EmojiUI')
     implementation project(':HenCoder')
+    implementation project(':RxJavaNote')
 }
