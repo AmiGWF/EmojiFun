@@ -6,6 +6,7 @@ import org.reactivestreams.Subscription;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -34,6 +35,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
 import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -1006,17 +1008,17 @@ public class ObservableNote {
 
                     @Override
                     public void onNext(String s) {
-                        Log.d(TAG,"onNext 数据 ： "+s);
+                        Log.d(TAG, "onNext 数据 ： " + s);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG,"onError 数据 ： "+e.toString());
+                        Log.d(TAG, "onError 数据 ： " + e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG,"onComplete");
+                        Log.d(TAG, "onComplete");
                     }
                 });
     }
@@ -1028,12 +1030,13 @@ public class ObservableNote {
     }
 
 
-    public static void rxMaybe(){
+    public static void rxMaybe() {
         Maybe.create(new MaybeOnSubscribe<String>() {
             @Override
             public void subscribe(MaybeEmitter<String> emitter) throws Exception {
                 emitter.onSuccess("Success");
-                emitter.onError(new Throwable("Error"));
+                emitter.onSuccess("Success2");
+//                emitter.onError(new Throwable("Error"));
                 emitter.onComplete();
 
             }
@@ -1045,60 +1048,67 @@ public class ObservableNote {
 
             @Override
             public void onSuccess(String s) {
-
+                Log.d(TAG, "rxMaybe onSuccess ： " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.d(TAG, "rxMaybe onError ： " + e.toString());
             }
 
             @Override
             public void onComplete() {
-
+                Log.d(TAG, "rxMaybe onComplete ： ");
             }
         });
+
+        Log.d(TAG, "rxMaybe --------------------------------- ");
     }
-    public static void rxObservable(){
+
+    public static void rxObservable() {
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 emitter.onNext("A");
                 emitter.onNext("B");
-                emitter.onError(new Throwable("Error"));
-                emitter.onComplete();
+
+                emitter.tryOnError(new NullPointerException("上游发送的空指针---"));
+                //emitter.onError(new Throwable("Error"));
+                //emitter.onComplete();
+
 
             }
         }).subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                Log.d(TAG, "rxObservable onSubscribe --------------------------------- ");
             }
 
             @Override
             public void onNext(String s) {
-
+                Log.d(TAG, "rxObservable onNext ： " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.d(TAG, "rxObservable onError ： " + e.toString());
             }
 
             @Override
             public void onComplete() {
-
+                Log.d(TAG, "rxObservable onComplete ： ");
             }
         });
-
+        Log.d(TAG, "rxObservable --------------------------------- ");
     }
 
-    public static void rxSingle(){
+    public static void rxSingle() {
         Single.create(new SingleOnSubscribe<String>() {
             @Override
             public void subscribe(SingleEmitter<String> emitter) throws Exception {
-                emitter.onSuccess("Success");
-                emitter.onError(new Throwable("Error"));
+//                emitter.onSuccess("Success");
+//                emitter.onSuccess("Success2");
+//                emitter.onError(new Throwable("Error"));
 
             }
         }).subscribe(new SingleObserver<String>() {
@@ -1109,73 +1119,120 @@ public class ObservableNote {
 
             @Override
             public void onSuccess(String s) {
-
+                Log.d(TAG, "rxSingle onSuccess ： " + s);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.d(TAG, "rxSingle onError ： " + e.toString());
             }
         });
+        Log.d(TAG, "rxSingle --------------------------------- ");
     }
 
-    public static void rxCompletable(){
+    public static void rxCompletable() {
         Completable.create(new CompletableOnSubscribe() {
             @Override
             public void subscribe(CompletableEmitter emitter) throws Exception {
-                emitter.onError(new Throwable("Error"));
+//                emitter.onError(new Throwable("Error"));
                 emitter.onComplete();
+
 
             }
         }).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(Disposable d) {
+                d.dispose();
+                d.isDisposed();
+//                Log.d(TAG, "rxCompletable onSubscribe--------------------------------- ");
 
             }
 
             @Override
             public void onComplete() {
-
+                Log.d(TAG, "rxCompletable onComplete ： ");
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.d(TAG, "rxCompletable onError ： " + e.toString());
             }
         });
+        Log.d(TAG, "rxCompletable --------------------------------- ");
     }
 
-    public static void rxFlowable(){
-        Flowable.create(new FlowableOnSubscribe<String>() {
-            @Override
-            public void subscribe(FlowableEmitter<String> emitter) throws Exception {
-                emitter.onNext("A");
-                emitter.onNext("B");
-                emitter.onError(new Throwable("Error"));
-                emitter.onComplete();
 
+    private static Subscription subscription;
+
+    public static void requestRx() {
+        subscription.request(70);
+    }
+
+    public static void rxFlowable() {
+        Flowable.create(new FlowableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
+                while (a < 1) {
+                    Log.d(TAG, "下游要求事件数量 : " + emitter.requested());
+                    Log.d(TAG, "上游发送数据 : " + a);
+                    Log.d(TAG, "上游线程 : " + Thread.currentThread().getName());
+                    emitter.onNext(a);
+                    a++;
+
+                }
+                emitter.onComplete();
             }
-        },BackpressureStrategy.ERROR)
-                .subscribe(new FlowableSubscriber<String>() {
+        }, BackpressureStrategy.DROP)
+                .subscribeOn(Schedulers.newThread())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        Log.d(TAG,"1----------doOnSubscribe accept ----"+Thread.currentThread().getName());
+
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        Log.d(TAG,"2----------doOnSubscribe accept ----"+Thread.currentThread().getName());
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .doOnSubscribe(new Consumer<Subscription>() {
+                    @Override
+                    public void accept(Subscription subscription) throws Exception {
+                        Log.d(TAG,"3----------doOnSubscribe accept ----"+Thread.currentThread().getName());
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .subscribe(new FlowableSubscriber<Integer>() {
                     @Override
                     public void onSubscribe(Subscription s) {
-
+                        subscription = s;
                     }
 
                     @Override
-                    public void onNext(String s) {
-
+                    public void onNext(Integer s) {
+                        Log.d(TAG, "下游rxFlowable onNext ： " + Thread.currentThread().getName());
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
+                        a = 0;
+                        Log.d(TAG, "下游rxFlowable onError ： " + t.toString());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        a = 0;
+                        Log.d(TAG, "下游rxFlowable onComplete ： "+Thread.currentThread().getName());
                     }
                 });
+
+
+
     }
 }

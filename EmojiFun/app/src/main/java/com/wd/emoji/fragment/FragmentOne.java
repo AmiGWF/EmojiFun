@@ -43,6 +43,9 @@ public class FragmentOne extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.tv_sheet_dialog).setOnClickListener(this);
         contentView.findViewById(R.id.tv_hencoder).setOnClickListener(this);
         contentView.findViewById(R.id.tv_color_filter).setOnClickListener(this);
+        contentView.findViewById(R.id.rxjava_back).setOnClickListener(this);
+        contentView.findViewById(R.id.rxjava_btn).setOnClickListener(this);
+        contentView.findViewById(R.id.data_struct).setOnClickListener(this);
 
     }
 
@@ -60,10 +63,21 @@ public class FragmentOne extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), DrawViewActivity.class));
                 break;
             case R.id.tv_color_filter://ColorFilter
-                //startActivity(new Intent(getActivity(), ColorFilterActivity.class));
-                ObservableNote.r8();
-
+                startActivity(new Intent(getActivity(), ColorFilterActivity.class));
                 break;
+            case R.id.rxjava_btn://RxJava操作符
+                ObservableNote.rxObservable();
+                ObservableNote.rxFlowable();
+                ObservableNote.rxSingle();
+                ObservableNote.rxMaybe();
+                ObservableNote.rxCompletable();
+                break;
+            case R.id.rxjava_back://RxJava请求事件
+                ObservableNote.requestRx();
+                break;
+            case R.id.data_struct://数据结构
+                break;
+
         }
 
     }

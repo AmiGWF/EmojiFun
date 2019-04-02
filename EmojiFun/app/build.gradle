@@ -31,4 +31,5 @@ dependencies {
     api project(':EmojiUI')
     implementation project(':HenCoder')
     implementation project(':RxJavaNote')
+    implementation project(':DataStruct')
 }

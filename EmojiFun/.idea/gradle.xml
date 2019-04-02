@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DataStruct" />
             <option value="$PROJECT_DIR$/EmojiUI" />
             <option value="$PROJECT_DIR$/HenCoder" />
             <option value="$PROJECT_DIR$/RxJavaNote" />

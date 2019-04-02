@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DataStruct/DataStruct.iml" filepath="$PROJECT_DIR$/DataStruct/DataStruct.iml" />
       <module fileurl="file://$PROJECT_DIR$/EmojiFun.iml" filepath="$PROJECT_DIR$/EmojiFun.iml" />
       <module fileurl="file://$PROJECT_DIR$/EmojiUI/EmojiUI.iml" filepath="$PROJECT_DIR$/EmojiUI/EmojiUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/HenCoder/HenCoder.iml" filepath="$PROJECT_DIR$/HenCoder/HenCoder.iml" />
